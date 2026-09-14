@@ -1,1 +1,6 @@
-chat_rooms: []
+chat_rooms:
+- name: chuck1
+  persona_names:
+  - Alex
+  - Luna
+  echo_chamber: false
