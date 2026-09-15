@@ -183,6 +183,7 @@ class LLMSettingsRequest(BaseModel):
     model: str = Field(..., min_length=1)
     max_tokens: int = Field(..., ge=1)
     temperature: float = Field(..., ge=0.0, le=1.0)
+    stop: List[str] = Field(default_factory=list)
 
 
 class TTSSettingsRequest(BaseModel):
@@ -244,6 +245,7 @@ class LLMSettingsResponse(BaseModel):
     model: str
     max_tokens: int
     temperature: float
+    stop: List[str] = Field(default_factory=list)
 
 
 class TTSSettingsResponse(BaseModel):

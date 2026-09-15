@@ -69,13 +69,16 @@ def warn_if_plaintext_llm(base_url: Optional[str]) -> None:
 def _base_payload(messages: List[dict]) -> dict:
     """Common /v1/chat/completions payload fields (model, sampling, streaming)."""
     settings = get_settings()
-    return {
+    payload = {
         "model": settings.llm.model,
         "messages": messages,
         "max_tokens": settings.llm.max_tokens,
         "temperature": settings.llm.temperature,
         "stream": True,
     }
+    if settings.llm.stop:
+        payload["stop"] = settings.llm.stop
+    return payload
 
 
 async def _iter_completion_chunks(payload: dict) -> AsyncGenerator[dict, None]:
@@ -133,6 +136,8 @@ async def chat_completion(messages: List[Dict[str, str]], max_tokens: int = 64) 
         "temperature": 0.1,  # Low temperature for deterministic routing
         "stream": False,
     }
+    if settings.llm.stop:
+        payload["stop"] = settings.llm.stop
 
     try:
         async with _llm_client(timeout=15.0) as client:

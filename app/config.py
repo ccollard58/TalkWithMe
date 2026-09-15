@@ -57,6 +57,16 @@ class LLMSettings(BaseModel):
     model: str = "default"
     max_tokens: int = 1024
     temperature: float = 0.8
+    # Stop sequences passed through to the LLM's /v1/chat/completions
+    # request. Some servers/models (e.g. a ChatML-templated model served
+    # without correctly-configured EOS/stop handling) keep generating past
+    # the end of the assistant turn, hallucinating a whole fake multi-turn
+    # conversation using literal role-marker tokens. Setting the model's
+    # turn-marker tokens here (e.g. ["<|im_end|>", "<|im_start|>"] for
+    # ChatML) makes the app cut generation off as a backstop regardless of
+    # server-side template configuration. Empty by default (no extra stop
+    # sequences sent).
+    stop: List[str] = Field(default_factory=list)
 
 
 # Pre-generification TTS parameter keys (docs/feature_TTS_generification.md,

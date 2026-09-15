@@ -1,6 +1,10 @@
 chat_rooms:
 - name: chuck1
   persona_names:
-  - Alex
-  - Luna
+  - Me_4
+  echo_chamber: false
+- name: with ozzy man
+  persona_names:
+  - Ozzy Man
+  - Me_4
   echo_chamber: false

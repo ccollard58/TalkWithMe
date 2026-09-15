@@ -1,0 +1,201 @@
+INFO:     Will watch for changes in these directories: ['D:\\git_repos\\TalkWithMe']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [7532] using StatReload
+INFO:     Started server process [552]
+INFO:     Waiting for application startup.
+2026-09-15 09:58:05,141 WARNING  app.services.llm: Warning: your LLM connection uses http; your chats are sent in cleartext.
+2026-09-15 09:58:05,752 INFO     app.services.tts_client: TTS capabilities cached: engine=omnivoice schema_version=2 (from http://localhost:8181)
+2026-09-15 09:58:05,752 INFO     app.main: TalkWithMe started with 3 personas: ['Luna', 'Me_3', 'Me_4']
+2026-09-15 09:58:05,752 INFO     app.main: LLM endpoint: http://localhost:9090 (API key: not configured)
+2026-09-15 09:58:05,752 INFO     app.main: TTS active: True (endpoint: http://localhost:8181)
+2026-09-15 09:58:05,752 INFO     app.main: STT active: True (endpoint: http://localhost:5000)
+2026-09-15 09:58:05,752 INFO     app.services.tool_registry: MCP: no servers configured, tool calling disabled
+2026-09-15 09:58:05,752 INFO     app.main: MCP tools available: 0
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60335 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60335 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60335 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60335 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60336 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60336 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60336 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60336 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+2026-09-15 09:58:46,508 INFO     app.persistence: Deleted message ae4a9260-3700-4571-a01c-a722b98db790 from room 'default'
+INFO:     127.0.0.1:60342 - "DELETE /api/persist/message/default/ae4a9260-3700-4571-a01c-a722b98db790 HTTP/1.1" 200 OK
+2026-09-15 09:58:48,914 INFO     app.persistence: Deleted message c07cda13-f962-4793-8b52-086e17ea23fe from room 'default'
+INFO:     127.0.0.1:60342 - "DELETE /api/persist/message/default/c07cda13-f962-4793-8b52-086e17ea23fe HTTP/1.1" 200 OK
+2026-09-15 09:58:50,632 INFO     app.persistence: Deleted message cb725344-112f-4c2c-91f1-ec4bb047a250 from room 'default'
+INFO:     127.0.0.1:60342 - "DELETE /api/persist/message/default/cb725344-112f-4c2c-91f1-ec4bb047a250 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60343 - "GET /api/session/load-room/chuck1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60343 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60346 - "PUT /api/chatrooms/chuck1/echo-chamber HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60346 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60346 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60351 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60351 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60351 - "POST /api/persist/audio?room=chuck1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60620 - "POST /api/chatrooms HTTP/1.1" 201 Created
+INFO:     127.0.0.1:60620 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60624 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "POST /api/personas/Me_4/clone HTTP/1.1" 201 Created
+INFO:     127.0.0.1:60627 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "GET /api/personas/Me_4_2/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "GET /api/personas/Me_4_2/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas/Me_4_2/detail HTTP/1.1" 200 OK
+2026-09-15 10:25:24,990 INFO     app.services.persona_store: Renamed persona directory Me_4_2 -> Ozzy Man
+2026-09-15 10:25:24,993 INFO     app.routers.personas: Cascaded persona rename 'Me_4_2' -> 'Ozzy Man' to chat rooms
+INFO:     127.0.0.1:60629 - "PUT /api/personas/Me_4_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas/Ozzy%20Man/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60629 - "GET /api/personas/Ozzy%20Man/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60633 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60633 - "GET /api/personas/Ozzy%20Man/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60674 - "PUT /api/personas/Ozzy%20Man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60674 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60674 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60674 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60674 - "GET /api/personas/Ozzy%20Man/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60712 - "PUT /api/personas/Ozzy%20Man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60712 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60712 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60712 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60714 - "GET /api/personas/Ozzy%20Man/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60714 - "GET /api/personas/Ozzy%20Man/reference-audio HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60714 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60716 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "PUT /api/chatrooms/with%20ozzy%20man/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "PUT /api/chatrooms/with%20ozzy%20man/echo-chamber HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60749 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60754 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60754 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60760 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60761 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60761 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60772 - "PUT /api/chatrooms/with%20ozzy%20man/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60772 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60772 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60779 - "GET /api/personas/Me_4/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60778 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60786 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60786 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60786 - "GET /api/persist/audio/with%20ozzy%20man/bf442c63-611a-4172-8e43-5dff3b057afd_0.wav HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60786 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2026-09-15 10:31:58,799 INFO     app.persistence: Deleted message bf442c63-611a-4172-8e43-5dff3b057afd from room 'with ozzy man'
+INFO:     127.0.0.1:60789 - "DELETE /api/persist/message/with%20ozzy%20man/bf442c63-611a-4172-8e43-5dff3b057afd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60789 - "DELETE /api/persist/message/with%20ozzy%20man/9664a265-ecee-4537-add1-403caacdc451 HTTP/1.1" 200 OK
+2026-09-15 10:32:02,216 INFO     app.persistence: Deleted message 9664a265-ecee-4537-add1-403caacdc451 from room 'with ozzy man'
+INFO:     127.0.0.1:60793 - "PUT /api/chatrooms/with%20ozzy%20man/echo-chamber HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/chat HTTP/1.1" 200 OK
+2026-09-15 10:32:19,097 INFO     app.routers.chat: Router returned unknown name 'Me_4<|im_end|>
+<|im_start|>', falling back to random
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:32:21,690 WARNING  app.persistence: Audio for message b0cc47d7-f3ab-4ba6-b711-5363285a15ca in room 'with ozzy man' arrived before the message row was persisted; staged as 'b0cc47d7-f3ab-4ba6-b711-5363285a15ca_pending_e857e128.wav'
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:32:22,788 WARNING  app.persistence: Audio for message b0cc47d7-f3ab-4ba6-b711-5363285a15ca in room 'with ozzy man' arrived before the message row was persisted; staged as 'b0cc47d7-f3ab-4ba6-b711-5363285a15ca_pending_d740c2d1.wav'
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:32:24,612 WARNING  app.persistence: Audio for message b0cc47d7-f3ab-4ba6-b711-5363285a15ca in room 'with ozzy man' arrived before the message row was persisted; staged as 'b0cc47d7-f3ab-4ba6-b711-5363285a15ca_pending_8152ad76.wav'
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+2026-09-15 10:32:25,365 INFO     app.persistence: Attached 3 pre-row audio file(s) to message b0cc47d7-f3ab-4ba6-b711-5363285a15ca in room 'with ozzy man'
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60802 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60796 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60829 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60851 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:34:44,565 WARNING  app.persistence: Audio for message 6c2eb23f-33f6-4c5a-9f87-cb364d0995d2 in room 'with ozzy man' arrived before the message row was persisted; staged as '6c2eb23f-33f6-4c5a-9f87-cb364d0995d2_pending_0e3b66c8.wav'
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:34:46,275 WARNING  app.persistence: Audio for message 6c2eb23f-33f6-4c5a-9f87-cb364d0995d2 in room 'with ozzy man' arrived before the message row was persisted; staged as '6c2eb23f-33f6-4c5a-9f87-cb364d0995d2_pending_55e7ccb7.wav'
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-15 10:34:48,200 WARNING  app.persistence: Audio for message 6c2eb23f-33f6-4c5a-9f87-cb364d0995d2 in room 'with ozzy man' arrived before the message row was persisted; staged as '6c2eb23f-33f6-4c5a-9f87-cb364d0995d2_pending_1d70ee7f.wav'
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+2026-09-15 10:34:48,532 INFO     app.persistence: Attached 3 pre-row audio file(s) to message 6c2eb23f-33f6-4c5a-9f87-cb364d0995d2 in room 'with ozzy man'
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "POST /api/persist/audio?room=with+ozzy+man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60897 - "GET /api/session/load-room/with%20ozzy%20man HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60897 - "POST /api/session/personas HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app\config.py'. Reloading...

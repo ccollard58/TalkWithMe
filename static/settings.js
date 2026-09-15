@@ -227,6 +227,7 @@ function populateSettingsForm(data) {
     sfLlmModel.value = data.llm.model || "";
     sfLlmMaxTokens.value = data.llm.max_tokens || 1024;
     sfLlmTemperature.value = data.llm.temperature ?? 0.8;
+    sfLlmStop.value = (data.llm.stop || []).join(", ");
 
     // TTS (the dynamic parameter section is populated from the capabilities
     // document by refreshTtsCapabilities(); only the static fields here)
@@ -285,6 +286,10 @@ function collectSettingsFromForm() {
             model: sfLlmModel.value.trim(),
             max_tokens: parseInt(sfLlmMaxTokens.value, 10),
             temperature: parseFloat(sfLlmTemperature.value),
+            stop: sfLlmStop.value
+                .split(",")
+                .map((s) => s.trim())
+                .filter((s) => s.length > 0),
         },
         // This dialog doesn't edit general settings, so it sends none: the
         // backend treats `general` as a partial update (omitted fields keep

@@ -3,6 +3,9 @@ llm:
   model: default
   max_tokens: 1024
   temperature: 0.8
+  stop:
+    - "<|im_end|>"
+    - "<|im_start|>"
 tts:
   enabled: true
   base_url: http://localhost:8181

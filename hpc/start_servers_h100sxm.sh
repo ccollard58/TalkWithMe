@@ -43,6 +43,10 @@ if command -v module >/dev/null 2>&1; then
     module load cuda13.0/toolkit/13.0.2
     module load python/3.11.10
 fi
+# cudnn9.1-cuda12.2 is loaded ONLY inside the whisper subshell below (not here):
+# whisper needs cuDNN 9.1, but OmniVoice bundles its own cuDNN 9.24 via its venv,
+# and having 9.1's lib dir in LD_LIBRARY_PATH globally shadows OmniVoice's
+# libcudnn_engines_runtime_compiled.so.9.24.x, causing CUDNN_STATUS_SUBLIBRARY_LOADING_FAILED.
 
 for required_file in "$LLAMA_BIN" "$OMNIVOICE_PY" "$WHISPER_PY"; do
     if [[ ! -x "$required_file" ]]; then
@@ -136,6 +140,9 @@ echo $! > "$PID_DIR/tts.pid"
 
 echo "Starting whisper-fastapi STT on $NODE_HOST:$STT_PORT (GPU $STT_GPU)"
 (
+    if command -v module >/dev/null 2>&1; then
+        module load cudnn9.1-cuda12.2/9.1.1.17
+    fi
     cd "$WHISPER_DIR"
     export CUDA_VISIBLE_DEVICES="$STT_GPU"
     exec "$WHISPER_PY" whisper_fastapi.py \

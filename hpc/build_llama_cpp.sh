@@ -1,7 +1,8 @@
 #!/bin/bash
 # Builds llama.cpp with CUDA support. Run this once on the head node before
 # submitting the SLURM job — GPU compute nodes have no git/cmake/compiler.
-# Safe to re-run: skips the build if llama-server already exists.
+# Safe to re-run: skips the build if llama-server already exists with the same
+# compiler and CUDA architectures; otherwise wipes and rebuilds.
 set -e
 
 LLAMA_CPP_DIR="${LLAMA_CPP_DIR:-$HOME/llama.cpp}"
@@ -31,20 +32,23 @@ if [[ "$($CXX -dumpfullversion -dumpversion)" != 13.1.* ]]; then
 fi
 export CC CXX
 
-
-if [ -x "$LLAMA_CPP_DIR/build/bin/llama-server" ]; then
-    echo "llama-server already built at $LLAMA_CPP_DIR/build/bin/llama-server, skipping"
-    exit 0
-fi
-
 if [ ! -d "$LLAMA_CPP_DIR" ]; then
     git clone https://github.com/ggml-org/llama.cpp "$LLAMA_CPP_DIR"
 fi
 
 BUILD_DIR="$LLAMA_CPP_DIR/build"
-if [ -f "$BUILD_DIR/CMakeCache.txt" ] && ! grep -Eq "^CMAKE_CXX_COMPILER:(FILEPATH|STRING)=$CXX$" "$BUILD_DIR/CMakeCache.txt"; then
-    echo "Removing stale build configured with a different C++ compiler"
+# 89 = Ada Lovelace (L40S), 90 = Hopper (H100/H200). The job may land on either
+# partition, so both kernel images must be baked into the same binary — a build
+# with only one arch fails at runtime on the other with "no kernel image is
+# available for execution on the device" (CUDA_ARCHITECTURES is not a substring
+# match, so a stale single-arch build must be wiped, not just a compiler change).
+CUDA_ARCHITECTURES="89;90"
+if [ -f "$BUILD_DIR/CMakeCache.txt" ] && { ! grep -Eq "^CMAKE_CXX_COMPILER:(FILEPATH|STRING)=$CXX$" "$BUILD_DIR/CMakeCache.txt" || ! grep -Eq "^CMAKE_CUDA_ARCHITECTURES:STRING=$CUDA_ARCHITECTURES$" "$BUILD_DIR/CMakeCache.txt"; }; then
+    echo "Removing stale build configured with a different C++ compiler or CUDA architectures"
     rm -rf "$BUILD_DIR"
+elif [ -x "$LLAMA_CPP_DIR/build/bin/llama-server" ]; then
+    echo "llama-server already built at $LLAMA_CPP_DIR/build/bin/llama-server, skipping"
+    exit 0
 fi
 
 # GGML_NATIVE=OFF: the head node's binutils is older than the loaded GCC and
@@ -56,6 +60,6 @@ cmake -S "$LLAMA_CPP_DIR" -B "$BUILD_DIR" \
     -DCMAKE_C_COMPILER="$CC" \
     -DCMAKE_CXX_COMPILER="$CXX" \
     -DCMAKE_CUDA_HOST_COMPILER="$CXX" \
-    -DCMAKE_CUDA_ARCHITECTURES=90 \
+    -DCMAKE_CUDA_ARCHITECTURES="$CUDA_ARCHITECTURES" \
     -DGGML_NATIVE=OFF
 cmake --build "$BUILD_DIR" --config Release -j"$JOBS"
