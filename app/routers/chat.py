@@ -201,6 +201,17 @@ def _with_global_system_prompt(system_prompt: str, settings) -> str:
     return system_prompt.rstrip() + "\n\n" + global_prompt
 
 
+def _with_multi_persona_turn_prompt(system_prompt: str, persona_name: str) -> str:
+    """Tell a persona how to contribute after another persona has spoken."""
+    return (
+        system_prompt.rstrip()
+        + "\n\nYou are participating in a conversation with other personas. "
+        f"Reply only as {persona_name}. Build on the user's message and any "
+        "other personas' comments with your own distinct perspective. Do not "
+        "repeat or paraphrase another persona's response."
+    )
+
+
 # ---------------------------------------------------------------------------
 # SSE streaming
 # ---------------------------------------------------------------------------
@@ -220,7 +231,9 @@ async def _chat_stream(req: ChatRequest) -> AsyncIterator[str]:
         return
 
     settings = get_settings()
-    max_replies = min(settings.general.max_persona_replies, len(eligible))
+    # A multi-persona room can continue its conversation by cycling speakers
+    # up to the configured limit. A solo room still produces only one reply.
+    max_replies = settings.general.max_persona_replies if len(eligible) > 1 else 1
 
     # Pick the first persona using the configured strategy
     first_persona_name = await _pick_persona(req.who_answers, req.message, req.chat_room)
@@ -249,13 +262,13 @@ async def _chat_stream(req: ChatRequest) -> AsyncIterator[str]:
             req.chat_room,
         )
 
-    replied_personas: list[str] = []
+    previous_persona_name: str | None = None
 
     for reply_idx in range(max_replies):
         if reply_idx == 0:
             persona_name = first_persona_name
         else:
-            remaining = [n for n in eligible if n not in replied_personas]
+            remaining = [n for n in eligible if n != previous_persona_name]
             if not remaining:
                 break
             persona_name = random.choice(remaining)
@@ -265,7 +278,7 @@ async def _chat_stream(req: ChatRequest) -> AsyncIterator[str]:
             yield f'data: {json.dumps({"type": "error", "message": f"Persona {persona_name} not found"})}\n\n'
             return
 
-        replied_personas.append(persona_name)
+        previous_persona_name = persona_name
 
         # Diagnostic trail (DEBUG): the three inputs the add_memory feature
         # gates on, exactly as the runtime sees them (post-cache, post-parse).
@@ -294,9 +307,13 @@ async def _chat_stream(req: ChatRequest) -> AsyncIterator[str]:
             yield f'data: {json.dumps({"type": "token", "persona": persona_name, "token": full_text})}\n\n'
         else:
             # Normal path: stream LLM response (history already includes prior personas' replies)
+            system_prompt = _with_global_system_prompt(
+                _system_prompt_with_memories(persona, settings), settings,
+            )
+            if max_replies > 1:
+                system_prompt = _with_multi_persona_turn_prompt(system_prompt, persona_name)
             messages = session.build_llm_messages(
-                system_prompt=_with_global_system_prompt(
-                    _system_prompt_with_memories(persona, settings), settings),
+                system_prompt=system_prompt,
                 responding_persona=persona_name,
                 max_turns_for_context=settings.general.max_turns_for_context,
             )

@@ -4,8 +4,8 @@ llm:
   max_tokens: 1024
   temperature: 0.8
   stop:
-    - "<|im_end|>"
-    - "<|im_start|>"
+  - <|im_end|>
+  - <|im_start|>
 tts:
   enabled: true
   base_url: http://localhost:8181
@@ -21,8 +21,8 @@ stt:
   timeout: 30.0
 general:
   persona_name_mentions: true
-  max_persona_replies: 1
-  max_turns_for_context: 6
+  max_persona_replies: 4
+  max_turns_for_context: 10
   show_tool_calls: true
   enable_persona_memories: true
   global_system_prompt: ''

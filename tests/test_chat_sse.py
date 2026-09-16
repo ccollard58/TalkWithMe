@@ -338,7 +338,17 @@ class TestMultiPersonaReplies:
         # Each reply gets its own assistant message id.
         assert len({e["message_id"] for e in starts}) == 2
 
-    def test_replies_capped_at_eligible_count(self, client, monkeypatch):
+    def test_two_personas_alternate_up_to_configured_reply_limit(self, client, monkeypatch):
+        _patch_general(monkeypatch, max_persona_replies=4)
+        _patch_chatrooms(monkeypatch, [ChatRoom(name="Duo", persona_names=["Alex", "Luna"])])
+        _stub_stream(monkeypatch, ["hi"])
+
+        events = _chat(client, who_answers="Alex", chat_room="Duo")
+
+        starts = sse_events_by_type(events, "start")
+        assert [e["persona"] for e in starts] == ["Alex", "Luna", "Alex", "Luna"]
+
+    def test_solo_room_still_receives_one_reply(self, client, monkeypatch):
         _patch_general(monkeypatch, max_persona_replies=4)
         _patch_chatrooms(monkeypatch, [ChatRoom(name="Solo", persona_names=["Luna"])])
         _stub_stream(monkeypatch, ["hi"])
@@ -346,13 +356,15 @@ class TestMultiPersonaReplies:
         events = _chat(client, who_answers="random", chat_room="Solo")
 
         starts = sse_events_by_type(events, "start")
-        assert [e["persona"] for e in starts] == ["Luna"]  # only one persona available
+        assert [e["persona"] for e in starts] == ["Luna"]
 
     def test_second_reply_sees_first_reply_in_history(self, client, monkeypatch):
         _patch_general(monkeypatch, max_persona_replies=2)
         seen_contexts = []
+        seen_system_prompts = []
 
         async def capturing_stream(messages):
+            seen_system_prompts.append(messages[0]["content"])
             seen_contexts.append(
                 [(m["role"], m["content"]) for m in messages if m["role"] != "system"])
             yield "hi"
@@ -367,6 +379,8 @@ class TestMultiPersonaReplies:
         # ...the second also saw Alex's answer, reformatted as a prefixed
         # "user" turn (another persona's words must not look like its own).
         assert seen_contexts[1] == [("user", "hello there"), ("user", "[Alex]: hi")]
+        assert all("own distinct perspective" in prompt for prompt in seen_system_prompts)
+        assert "Reply only as Luna." in seen_system_prompts[1]
 
 
 # ---------------------------------------------------------------------------

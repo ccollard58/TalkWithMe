@@ -8,3 +8,8 @@ chat_rooms:
   - Ozzy Man
   - Me_4
   echo_chamber: false
+- name: convo 1
+  persona_names:
+  - Ozzy Man
+  - Me_4
+  echo_chamber: false
