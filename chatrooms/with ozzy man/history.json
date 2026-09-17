@@ -1,0 +1,77 @@
+{
+  "datetime": "2026-09-15T13:57:53.573300-04:00",
+  "messages": [
+    {
+      "id": "48c77248-6085-45c5-8c59-278e4cfda702",
+      "sender": "USER",
+      "text": "where am i right now?",
+      "audio": []
+    },
+    {
+      "id": "2ed17200-5f9e-4bbb-922e-64fafbbf3d1f",
+      "sender": "Me_4",
+      "text": "You are currently in a house.",
+      "audio": [
+        "2ed17200-5f9e-4bbb-922e-64fafbbf3d1f_0.wav"
+      ]
+    },
+    {
+      "id": "eb19d4c7-1801-49dc-8e0f-a717c29122b7",
+      "sender": "USER",
+      "text": "what house man?",
+      "audio": []
+    },
+    {
+      "id": "68ad77b2-5506-458e-97b5-2dfadcc338a7",
+      "sender": "Ozzy Man",
+      "text": "Mate, I don't know what house you're in, but if you're not in my house, you're in the wrong house!",
+      "audio": [
+        "68ad77b2-5506-458e-97b5-2dfadcc338a7_0.wav"
+      ]
+    },
+    {
+      "id": "eb3fb926-7203-4690-8930-8e1c9047ff0e",
+      "sender": "USER",
+      "text": "give me a long diatribe about the latest NFL teams and their relative strengths. make it funny.",
+      "audio": []
+    },
+    {
+      "id": "af2b05d7-524f-4ede-8eca-2f0484059192",
+      "sender": "Ozzy Man",
+      "text": "Alright, buckle up mate, cause here's a long diatribe about the latest NFL teams and their relative strengths, and of course, it's going to be as funny as a koala on a sugar rush. So, the Pittsburgh Steelers, well, they're like a kangaroo in the outback - they're all over the place but somehow manage to survive. The New England Patriots, they're like a pack of dingoes - cunning, sneaky, and always ready to pounce. The Dallas Cowboys, they're like a group of tourists in the city - always looking for the next big thing, but never quite sure where they're going. And the Green Bay Packers, they're like a bunch of surfers - they're always riding the wave, but sometimes they wipe out. So there you have it, a long diatribe about the latest NFL teams and their relative strengths, and of course, it's as funny as a koala on a sugar rush. Now, if you'll excuse me, I need to go and find some more koalas to sugar rush with.",
+      "audio": [
+        "af2b05d7-524f-4ede-8eca-2f0484059192_0.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_1.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_2.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_3.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_4.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_5.wav",
+        "af2b05d7-524f-4ede-8eca-2f0484059192_6.wav"
+      ]
+    },
+    {
+      "id": "ac8dbced-2abc-43c0-aa0b-dc5595dfc2bf",
+      "sender": "USER",
+      "text": "what do you mean by \"cactus\"?",
+      "audio": []
+    },
+    {
+      "id": "75afab93-e5fe-4daf-9749-57513fc24df2",
+      "sender": "Ozzy Man",
+      "text": "Well, mate, \"cactus\" is a type of plant that's really good at storing water. It's like a sponge, but instead of water, it's got a bunch of needles that poke you if you get too close. It's like a prickly little friend that's always there to give you a reminder that life can be a bit rough sometimes.",
+      "audio": [
+        "75afab93-e5fe-4daf-9749-57513fc24df2_0.wav",
+        "75afab93-e5fe-4daf-9749-57513fc24df2_1.wav",
+        "75afab93-e5fe-4daf-9749-57513fc24df2_2.wav"
+      ]
+    },
+    {
+      "id": "90bed10c-c4e1-401e-9fd0-285e99c75ab5",
+      "sender": "Me_4",
+      "text": "what do you think of the new Harry Potter movie?",
+      "audio": [
+        "90bed10c-c4e1-401e-9fd0-285e99c75ab5_0.wav"
+      ]
+    }
+  ]
+}

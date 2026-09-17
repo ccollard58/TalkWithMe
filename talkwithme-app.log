@@ -1,73 +1,543 @@
 INFO:     Will watch for changes in these directories: ['D:\\git_repos\\TalkWithMe']
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [24660] using WatchFiles
-INFO:     Started server process [23516]
+INFO:     Started reloader process [23340] using WatchFiles
+INFO:     Started server process [24524]
 INFO:     Waiting for application startup.
-2026-09-16 07:31:41,453 WARNING  app.services.llm: Warning: your LLM connection uses http; your chats are sent in cleartext.
-2026-09-16 07:31:42,067 INFO     app.services.tts_client: TTS capabilities cached: engine=omnivoice schema_version=2 (from http://localhost:8181)
-2026-09-16 07:31:42,067 INFO     app.main: TalkWithMe started with 4 personas: ['Luna', 'Me_3', 'Me_4', 'Ozzy Man']
-2026-09-16 07:31:42,067 INFO     app.main: LLM endpoint: http://localhost:9090 (API key: not configured)
-2026-09-16 07:31:42,067 INFO     app.main: TTS active: True (endpoint: http://localhost:8181)
-2026-09-16 07:31:42,067 INFO     app.main: STT active: True (endpoint: http://localhost:5000)
-2026-09-16 07:31:42,067 INFO     app.services.tool_registry: MCP: no servers configured, tool calling disabled
-2026-09-16 07:31:42,067 INFO     app.main: MCP tools available: 0
+2026-09-16 08:15:45,801 WARNING  app.services.llm: Warning: your LLM connection uses http; your chats are sent in cleartext.
+2026-09-16 08:15:46,435 INFO     app.services.tts_client: TTS capabilities cached: engine=omnivoice schema_version=2 (from http://localhost:8181)
+2026-09-16 08:15:46,435 INFO     app.main: TalkWithMe started with 4 personas: ['Chuck', 'Luna', 'Me_3', 'Ozzy Man']
+2026-09-16 08:15:46,435 INFO     app.main: LLM endpoint: http://localhost:9090 (API key: not configured)
+2026-09-16 08:15:46,435 INFO     app.main: TTS active: True (endpoint: http://localhost:8181)
+2026-09-16 08:15:46,435 INFO     app.main: STT active: True (endpoint: http://localhost:5000)
+2026-09-16 08:15:46,435 INFO     app.services.tool_registry: MCP: no servers configured, tool calling disabled
+2026-09-16 08:15:46,435 INFO     app.main: MCP tools available: 0
 INFO:     Application startup complete.
-INFO:     127.0.0.1:60949 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60949 - "GET /static/style.css HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60951 - "GET /static/theme.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60953 - "GET /static/state.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60952 - "GET /static/utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60950 - "GET /static/persistence.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60954 - "GET /static/tts.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60949 - "GET /static/stt.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60951 - "GET /static/chat.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60953 - "GET /static/persona.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60954 - "GET /static/settings.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60952 - "GET /static/chatrooms.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60950 - "GET /static/tts-params.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60949 - "GET /static/gen-settings.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60951 - "GET /static/app.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:60951 - "GET /api/personas HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60951 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60951 - "POST /api/session/personas HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60950 - "GET /api/personas/Me_4/avatar HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60949 - "GET /api/personas/Me_3/avatar HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "GET /api/tts/health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "GET /api/stt/health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "GET /api/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "GET /api/session/load-room/convo%201 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60952 - "POST /api/session/personas HTTP/1.1" 200 OK
-2026-09-16 07:32:09,892 INFO     app.persistence: Cleared persistence for room 'convo 1'
-INFO:     127.0.0.1:60960 - "POST /api/session/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60960 - "POST /api/chat HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/tts HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60964 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62142 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61130 - "POST /api/personas HTTP/1.1" 201 Created
+INFO:     127.0.0.1:61130 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61130 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61130 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61131 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61133 - "GET /api/session/load-room/convo%201 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61133 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61135 - "PUT /api/chatrooms/convo%201/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61135 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61135 - "POST /api/session/personas HTTP/1.1" 200 OK
+2026-09-16 12:12:27,513 INFO     app.persistence: Deleted message 5aedf9d7-e211-49af-9e16-88b96570ca20 from room 'convo 1'
+INFO:     127.0.0.1:61136 - "DELETE /api/persist/message/convo%201/5aedf9d7-e211-49af-9e16-88b96570ca20 HTTP/1.1" 200 OK
+2026-09-16 12:12:31,836 INFO     app.persistence: Deleted message 1645e91c-2aa1-4508-b154-e7c9da6baf4e from room 'convo 1'
+INFO:     127.0.0.1:61136 - "DELETE /api/persist/message/convo%201/1645e91c-2aa1-4508-b154-e7c9da6baf4e HTTP/1.1" 200 OK
+2026-09-16 12:12:37,304 INFO     app.persistence: Deleted message 16700c17-f2ae-430f-82cc-d785501d90b0 from room 'convo 1'
+INFO:     127.0.0.1:61137 - "DELETE /api/persist/message/convo%201/16700c17-f2ae-430f-82cc-d785501d90b0 HTTP/1.1" 200 OK
+2026-09-16 12:12:40,565 INFO     app.persistence: Deleted message 9e8dcb6d-0713-49ee-a3e2-30c874b51dc0 from room 'convo 1'
+INFO:     127.0.0.1:61137 - "DELETE /api/persist/message/convo%201/9e8dcb6d-0713-49ee-a3e2-30c874b51dc0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61140 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-16 12:12:52,436 WARNING  app.persistence: Audio for message 66fd40ba-0e8a-4780-b6e7-d788a25cc7f0 in room 'convo 1' arrived before the message row was persisted; staged as '66fd40ba-0e8a-4780-b6e7-d788a25cc7f0_pending_fa1231d6.wav'
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+2026-09-16 12:12:52,797 INFO     app.persistence: Attached 1 pre-row audio file(s) to message 66fd40ba-0e8a-4780-b6e7-d788a25cc7f0 in room 'convo 1'
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61146 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61195 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /static/state.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61233 - "GET /static/settings.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61233 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61233 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61233 - "GET /api/personas/Chuck/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61234 - "GET /api/personas/Me_3/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61335 - "GET /api/session/load-room/convo%201 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61335 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61335 - "PUT /api/chatrooms/convo%201/echo-chamber HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61335 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61335 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61342 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61342 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61342 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61343 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61343 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61343 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65174 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65189 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65210 - "POST /api/personas HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65210 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65210 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65210 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65211 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65211 - "GET /api/personas/Mick/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65216 - "PUT /api/personas/Mick HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65216 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65216 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65216 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65217 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65217 - "GET /api/personas/Mick/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65217 - "GET /api/personas/Mick/reference-audio HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65223 - "PUT /api/personas/Mick HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65223 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65223 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65223 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65224 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65224 - "GET /api/personas/Mick/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65228 - "PUT /api/personas/Mick HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65228 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65228 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65228 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65229 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65241 - "PUT /api/chatrooms/convo%201/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65241 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65241 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65289 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65290 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65290 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65304 - "GET /api/persist/audio/convo%201/8955befd-b5a8-4e57-9498-65162b8548cf_0.wav HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65304 - "GET /api/persist/audio/convo%201/6ab936ed-baee-4cc8-ac7b-aaa30a292225_0.wav HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65304 - "GET /api/persist/audio/convo%201/33b2377b-b7a4-4782-87ac-f477539dd711_0.wav HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65344 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65345 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65345 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65345 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65345 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65351 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65351 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65351 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65351 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65351 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "POST /api/persist/audio?room=convo+1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65367 - "POST /api/chatrooms HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65367 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65367 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65369 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65369 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65369 - "GET /api/session/load-room/convo%202 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65372 - "PUT /api/chatrooms/convo%202/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65372 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65372 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65399 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65487 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65487 - "GET /api/personas/Ozzy%20Man/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65490 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65490 - "GET /api/personas/Mick/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65490 - "GET /api/personas HTTP/1.1" 200 OK
+2026-09-16 13:06:53,449 INFO     app.routers.personas: Cascaded persona delete 'Me_3' from chat rooms
+INFO:     127.0.0.1:65490 - "DELETE /api/personas/Me_3 HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:65490 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65490 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65490 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65492 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65492 - "GET /api/personas/Mick/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65492 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65492 - "GET /api/personas/Steve/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65496 - "PUT /api/personas/Steve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65496 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65496 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65496 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65497 - "GET /api/personas/Luna/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65498 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65500 - "GET /api/personas/Chuck/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65500 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65500 - "GET /api/personas/Luna/detail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65501 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /static/style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49931 - "GET /static/state.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /static/utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49931 - "GET /static/theme.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49938 - "GET /static/stt.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49936 - "GET /static/persistence.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49937 - "GET /static/tts.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49939 - "GET /static/chat.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49931 - "GET /static/chatrooms.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49936 - "GET /static/settings.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49938 - "GET /static/tts-params.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49939 - "GET /static/app.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49930 - "GET /static/persona.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49937 - "GET /static/gen-settings.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49936 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49936 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49936 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49937 - "GET /api/personas/Chuck/avatar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/session/load-room/convo%202 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "POST /api/session/personas HTTP/1.1" 200 OK
+2026-09-16 13:56:25,985 INFO     app.persistence: Deleted message b3fd0074-2a4e-491f-a142-68de6fb7eeff from room 'convo 2'
+INFO:     127.0.0.1:49930 - "DELETE /api/persist/message/convo%202/b3fd0074-2a4e-491f-a142-68de6fb7eeff HTTP/1.1" 200 OK
+2026-09-16 13:56:27,254 INFO     app.persistence: Deleted message 7c831fe3-9c23-4edc-8a08-02b657bd2d96 from room 'convo 2'
+INFO:     127.0.0.1:49930 - "DELETE /api/persist/message/convo%202/7c831fe3-9c23-4edc-8a08-02b657bd2d96 HTTP/1.1" 200 OK
+2026-09-16 13:56:28,116 INFO     app.persistence: Deleted message 1936bf5b-4982-4600-863b-e1622033b2aa from room 'convo 2'
+INFO:     127.0.0.1:49930 - "DELETE /api/persist/message/convo%202/1936bf5b-4982-4600-863b-e1622033b2aa HTTP/1.1" 200 OK
+2026-09-16 13:56:29,189 INFO     app.persistence: Deleted message 79721990-2ff3-49dd-9001-1dd4e682bd4c from room 'convo 2'
+INFO:     127.0.0.1:49930 - "DELETE /api/persist/message/convo%202/79721990-2ff3-49dd-9001-1dd4e682bd4c HTTP/1.1" 200 OK
+2026-09-16 13:56:36,317 INFO     app.persistence: Deleted message b51ab6a5-e32b-44ba-871e-9b1cbbcc7c45 from room 'convo 2'
+INFO:     127.0.0.1:49946 - "DELETE /api/persist/message/convo%202/b51ab6a5-e32b-44ba-871e-9b1cbbcc7c45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49951 - "POST /api/chat HTTP/1.1" 200 OK
+2026-09-16 13:56:55,511 INFO     app.routers.chat: Router returned unknown name '', falling back to random
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+2026-09-16 13:57:03,017 WARNING  app.persistence: Audio for message 49f748df-8387-42ff-af5d-37bbe8a57587 in room 'convo 2' arrived before the message row was persisted; staged as '49f748df-8387-42ff-af5d-37bbe8a57587_pending_2f85f5fe.wav'
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49975 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2026-09-16 13:57:04,268 INFO     app.persistence: Attached 1 pre-row audio file(s) to message 49f748df-8387-42ff-af5d-37bbe8a57587 in room 'convo 2'
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49957 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49995 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50183 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50237 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50404 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50404 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50376 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50454 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50454 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50454 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50454 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/tts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50422 - "POST /api/persist/audio?room=convo+2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/chatrooms/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "POST /api/session/personas HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/tts/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/stt/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50470 - "GET /api/session/load-room/default HTTP/1.1" 200 OK
