@@ -622,6 +622,8 @@ standalone script under `impl/` with per-engine install notes.
   - Add global system prompt option (#101)
   - Bug fix: cloning a persona should rename its directory (#102)
   - Bug fix: two chatroom deletion issues (#105)
+- **Work in progress; add date when ready** v7.1
+  - **TODO** Release notes for 7.1 go here
 
 ## License
 
