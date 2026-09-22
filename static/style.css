@@ -1430,6 +1430,7 @@ html, body {
     white-space: nowrap;
 }
 
+<<<<<<< HEAD
 /* Inline "TTS Model" profile editor (Manage button toggles this). Each row
    is one named engine endpoint: a name input, a URL input, and a remove
    button. */
@@ -1457,6 +1458,18 @@ html, body {
 
 .tts-model-list-row input.tts-model-name {
     flex: 0 0 40%;
+=======
+/* "Reset to defaults" action row above the dynamic parameter list: it acts
+   on the list below (the Refresh button acts on the Base URL, so it stays
+   on that row). Left-aligned — it is the section's action, not a field. */
+.tts-params-actions {
+    display: flex;
+}
+
+.tts-params-actions button {
+    flex-shrink: 0;
+    white-space: nowrap;
+>>>>>>> 8688445 (Issue #121 - add factory reset button on TTS server settings (#122))
 }
 
 /* ==========================================================================
