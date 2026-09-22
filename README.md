@@ -651,7 +651,7 @@ standalone script under `impl/` with per-engine install notes.
   - Add global system prompt option (#101)
   - Bug fix: cloning a persona should rename its directory (#102)
   - Bug fix: two chatroom deletion issues (#105)
-- **Work in progress; add date when ready** v7.1
+- **2026-09-15** v7.1
   - Minor: add favicon (#111)
   - Minor: remove prepackaged `settings.yaml` and `chatrooms.yaml` (#113)
   - Minor: `personas.yaml` -> `personas.yaml.example` and untrack `personas.yaml` (#119)
