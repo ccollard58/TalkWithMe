@@ -2,6 +2,12 @@ app/__pycache__/
 app/services/__pycache__/
 app/routers/__pycache__/
 tests/__pycache__/
+<<<<<<< HEAD
+=======
+personas.yaml
+personas.yaml.*
+!personas.yaml.example
+>>>>>>> ce05590 (Issue #119 - untrack personas.yaml; update startup logic (#120))
 future*.md
 <<<<<<< HEAD
 =======
