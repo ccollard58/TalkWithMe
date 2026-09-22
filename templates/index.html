@@ -317,6 +317,21 @@
                         </legend>
                         <div id="sf-tts-fields" class="settings-fields">
                             <div class="form-row">
+                                <label for="sf-tts-model-select">TTS Model</label>
+                                <div class="tts-url-row">
+                                    <select id="sf-tts-model-select">
+                                        <option value="">— Custom / not in list —</option>
+                                    </select>
+                                    <!-- type=button: toggles the profile editor below, never submits. -->
+                                    <button id="sf-tts-model-manage-btn" type="button"
+                                            class="btn-secondary btn-small"
+                                            title="Add, edit, or remove TTS Model entries">
+                                        Manage
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="sf-tts-model-list" class="tts-model-list hidden"></div>
+                            <div class="form-row">
                                 <label for="sf-tts-base-url">Base URL</label>
                                 <div class="tts-url-row">
                                     <input id="sf-tts-base-url" type="text">

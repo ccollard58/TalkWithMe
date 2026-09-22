@@ -6,13 +6,14 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException
 
 from app import config as app_config
-from app.config import AppSettings, LLMSettings, STTConfig, TTSConfig
+from app.config import AppSettings, LLMSettings, STTConfig, TTSConfig, TTSEngineProfile
 from app.models import (
     GeneralSettingsResponse,
     LLMSettingsResponse,
     SettingsResponse,
     SettingsUpdateRequest,
     STTSettingsResponse,
+    TTSEngineProfileModel,
     TTSSettingsResponse,
 )
 from app.services import llm, tts_client
@@ -37,6 +38,10 @@ def _to_response(cfg: AppSettings) -> SettingsResponse:
             timeout=cfg.tts.timeout,
             streaming=cfg.tts.streaming,
             parameters=cfg.tts.parameters,
+            engine_profiles=[
+                TTSEngineProfileModel(name=p.name, base_url=p.base_url)
+                for p in cfg.tts.engine_profiles
+            ],
         ),
         stt=STTSettingsResponse(
             enabled=cfg.stt.enabled,
@@ -84,6 +89,22 @@ def _validate_tts_parameters_if_documented(base_url: Optional[str], parameters: 
         raise HTTPException(status_code=422, detail=error)
 
 
+def _validate_engine_profiles(profiles: list) -> None:
+    """422 on a malformed TTS Model profile (blank name, scheme-less URL)
+    instead of a 500 from TTSEngineProfile's own validator raising deep
+    inside AppSettings construction.
+    """
+    for p in profiles:
+        if not p.name.strip():
+            raise HTTPException(status_code=422, detail="TTS engine profile name cannot be blank.")
+        cleaned = app_config.clean_base_url(p.base_url)
+        if not cleaned or not cleaned.startswith(("http://", "https://")):
+            raise HTTPException(
+                status_code=422,
+                detail=f"TTS engine profile '{p.name}': base_url must start with http:// or https://.",
+            )
+
+
 @router.put("", response_model=SettingsResponse)
 def update_settings(req: SettingsUpdateRequest):
     """Update application settings and persist to settings.yaml.
@@ -101,6 +122,7 @@ def update_settings(req: SettingsUpdateRequest):
     stt_base = app_config.clean_base_url(req.stt.base_url)
 
     _validate_tts_parameters_if_documented(tts_base, req.tts.parameters)
+    _validate_engine_profiles(req.tts.engine_profiles)
 
     # The mcp section is yaml-only for now (deliberately not in the request
     # model). Carry it over from the current config, otherwise every UI save
@@ -132,6 +154,10 @@ def update_settings(req: SettingsUpdateRequest):
             timeout=req.tts.timeout,
             streaming=req.tts.streaming,
             parameters=req.tts.parameters,
+            engine_profiles=[
+                TTSEngineProfile(name=p.name, base_url=p.base_url)
+                for p in req.tts.engine_profiles
+            ],
         ),
         stt=STTConfig(
             enabled=req.stt.enabled,

@@ -1,5 +1,5 @@
 {
-  "datetime": "2026-09-16T13:57:52.867092-04:00",
+  "datetime": "2026-09-20T20:36:27.034841-04:00",
   "messages": [
     {
       "id": "ffdd92f3-3104-4400-833c-dd5b463603d0",
@@ -133,6 +133,102 @@
         "13627a14-7782-483a-ae25-a1053b0481d0_2.wav",
         "13627a14-7782-483a-ae25-a1053b0481d0_3.wav",
         "13627a14-7782-483a-ae25-a1053b0481d0_4.wav"
+      ]
+    },
+    {
+      "id": "d6ce225a-779c-41c6-9a67-74a477978ec7",
+      "sender": "USER",
+      "text": "Oh, you're talking to the *right* bloke! Now, Mick's got his opinion, and I respect that, mate, but I gotta say — these birds are *absolute legends* when you take the time to really look at 'em!",
+      "audio": []
+    },
+    {
+      "id": "03e57b32-5209-4091-b834-11ab181a29af",
+      "sender": "Mick",
+      "text": "Oh, you're talking to the *right* bloke! Now, Mick's got his opinion, and I respect that, mate, but I gotta say — these birds are *absolute legends* when you take the time to really look at 'em!",
+      "audio": []
+    },
+    {
+      "id": "314ee1aa-d4f7-469c-9c8a-6e475388358e",
+      "sender": "USER",
+      "text": "why?",
+      "audio": []
+    },
+    {
+      "id": "6d091db3-6276-4769-88fc-234dff8f2d2a",
+      "sender": "Mick",
+      "text": "why?",
+      "audio": []
+    },
+    {
+      "id": "235a6bb3-0690-4bd3-a89e-77009918a2be",
+      "sender": "USER",
+      "text": "James! who shall we prank call?",
+      "audio": []
+    },
+    {
+      "id": "0f66d215-4bb9-4de9-8566-4aee5f11621d",
+      "sender": "Ozzy Man",
+      "text": "James! who shall we prank call?",
+      "audio": [
+        "0f66d215-4bb9-4de9-8566-4aee5f11621d_0.wav",
+        "0f66d215-4bb9-4de9-8566-4aee5f11621d_1.wav"
+      ]
+    },
+    {
+      "id": "c35374a7-71e5-409f-939b-668f3bf9022c",
+      "sender": "USER",
+      "text": "we need to pester some pesterers!",
+      "audio": []
+    },
+    {
+      "id": "dfaa094d-0ecc-4236-bc4c-7c4d5fb1dde3",
+      "sender": "Ozzy Man",
+      "text": "we need to pester some pesterers!",
+      "audio": [
+        "dfaa094d-0ecc-4236-bc4c-7c4d5fb1dde3_0.wav"
+      ]
+    },
+    {
+      "id": "589fe267-da70-4b1f-a0e6-79d226b5b0af",
+      "sender": "USER",
+      "text": "the extended warranty people need to buy us some gift cards!",
+      "audio": []
+    },
+    {
+      "id": "5856fe71-f29a-4b18-b694-65af6ad853f0",
+      "sender": "Ozzy Man",
+      "text": "the extended warranty people need to buy us some gift cards!",
+      "audio": [
+        "5856fe71-f29a-4b18-b694-65af6ad853f0_0.wav"
+      ]
+    },
+    {
+      "id": "2ca61d74-80f7-407d-9d33-ed64b8883081",
+      "sender": "USER",
+      "text": "it will be sloppy wet and we will die!",
+      "audio": []
+    },
+    {
+      "id": "7dd6d99d-be57-45c9-9d3f-4866dcd07dd9",
+      "sender": "Ozzy Man",
+      "text": "it will be sloppy wet and we will die!",
+      "audio": [
+        "7dd6d99d-be57-45c9-9d3f-4866dcd07dd9_0.wav"
+      ]
+    },
+    {
+      "id": "2eb31d02-266d-4fe9-96c9-627a77a0f0dd",
+      "sender": "USER",
+      "text": "James! that dinner was destination fucking perfect!",
+      "audio": []
+    },
+    {
+      "id": "224a0262-efb4-4513-819f-06d548e3034a",
+      "sender": "Ozzy Man",
+      "text": "James! that dinner was destination fucking perfect!",
+      "audio": [
+        "224a0262-efb4-4513-819f-06d548e3034a_0.wav",
+        "224a0262-efb4-4513-819f-06d548e3034a_1.wav"
       ]
     }
   ]

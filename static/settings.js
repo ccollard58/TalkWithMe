@@ -31,6 +31,10 @@ let ttsSavedParameters = {};
 // Monotonic sequence so a slow capabilities response can't clobber a
 // newer one (user typing fast in the Base URL field).
 let ttsCapFetchSeq = 0;
+// Named TTS engine profiles ("TTS Model" dropdown): [{name, base_url}, ...].
+// Kept in sync with the inline "Manage" editor rows; collected into
+// tts.engine_profiles on save.
+let ttsEngineProfiles = [];
 
 /* ==========================================================================
    Event listeners
@@ -62,6 +66,23 @@ sfSttEnabled.addEventListener("change", () => {
 // against whatever answers (plan M4.1).
 sfTtsBaseUrl.addEventListener("change", () => {
     refreshTtsCapabilities(sfTtsBaseUrl.value.trim());
+});
+
+// "TTS Model" dropdown: switching profiles means switching engines, so
+// point Base URL at the profile's url and probe it exactly like a manual
+// edit would (the field is the single source of truth for what gets saved).
+sfTtsModelSelect.addEventListener("change", () => {
+    const idx = sfTtsModelSelect.value;
+    if (idx === "") return; // "— Custom / not in list —"
+    const profile = ttsEngineProfiles[parseInt(idx, 10)];
+    if (!profile) return;
+    sfTtsBaseUrl.value = profile.base_url;
+    refreshTtsCapabilities(profile.base_url);
+});
+
+// Reveals/hides the inline profile editor. type=button, never submits.
+sfTtsModelManageBtn.addEventListener("click", () => {
+    sfTtsModelList.classList.toggle("hidden");
 });
 
 // Explicit reconnect button (plan M4.1): re-probe the URL currently in the
@@ -242,6 +263,12 @@ function populateSettingsForm(data) {
     sfTtsStreaming.checked = data.tts.streaming || false;
     updateTtsFieldsState();
 
+    ttsEngineProfiles = Array.isArray(data.tts.engine_profiles)
+        ? data.tts.engine_profiles.map((p) => ({ name: p.name, base_url: p.base_url }))
+        : [];
+    renderTtsModelSelect();
+    renderTtsModelList();
+
     // STT
     sfSttEnabled.checked = data.stt.enabled;
     sfSttBaseUrl.value = data.stt.base_url || "";
@@ -255,6 +282,88 @@ function updateTtsFieldsState() {
     } else {
         sfTtsFields.classList.add("disabled");
     }
+}
+
+/** Strip trailing slashes for a profile/base-url comparison (matches the
+ *  backend's clean_base_url normalization closely enough for UI matching). */
+function stripTrailingSlashes(url) {
+    let result = url;
+    while (result.endsWith("/")) {
+        result = result.slice(0, -1);
+    }
+    return result;
+}
+
+/**
+ * Rebuild the "TTS Model" dropdown from ttsEngineProfiles. Selects the
+ * profile whose base_url matches the current Base URL field, if any —
+ * otherwise falls back to "— Custom / not in list —" (an unsaved edit or a
+ * URL with no matching profile is not an error, just not a known model).
+ */
+function renderTtsModelSelect() {
+    const current = stripTrailingSlashes(sfTtsBaseUrl.value.trim());
+    sfTtsModelSelect.innerHTML = '<option value="">— Custom / not in list —</option>';
+    let matched = "";
+    ttsEngineProfiles.forEach((p, i) => {
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = p.name;
+        sfTtsModelSelect.appendChild(opt);
+        if (stripTrailingSlashes(p.base_url) === current) matched = String(i);
+    });
+    sfTtsModelSelect.value = matched;
+}
+
+/** Rebuild the inline profile editor rows from ttsEngineProfiles. */
+function renderTtsModelList() {
+    sfTtsModelList.innerHTML = "";
+    ttsEngineProfiles.forEach((p, i) => {
+        const row = document.createElement("div");
+        row.className = "tts-model-list-row";
+
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.className = "tts-model-name";
+        nameInput.placeholder = "Name (e.g. OmniVoice)";
+        nameInput.value = p.name;
+        nameInput.addEventListener("input", () => {
+            ttsEngineProfiles[i].name = nameInput.value;
+            renderTtsModelSelect();
+        });
+
+        const urlInput = document.createElement("input");
+        urlInput.type = "text";
+        urlInput.placeholder = "http://host:port";
+        urlInput.value = p.base_url;
+        urlInput.addEventListener("input", () => {
+            ttsEngineProfiles[i].base_url = urlInput.value;
+            renderTtsModelSelect();
+        });
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button"; // never submits the form
+        removeBtn.className = "btn-secondary btn-small";
+        removeBtn.textContent = "✕";
+        removeBtn.title = "Remove this TTS Model entry";
+        removeBtn.addEventListener("click", () => {
+            ttsEngineProfiles.splice(i, 1);
+            renderTtsModelList();
+            renderTtsModelSelect();
+        });
+
+        row.append(nameInput, urlInput, removeBtn);
+        sfTtsModelList.appendChild(row);
+    });
+
+    const addBtn = document.createElement("button");
+    addBtn.type = "button"; // never submits the form
+    addBtn.className = "btn-secondary btn-small";
+    addBtn.textContent = "+ Add Model";
+    addBtn.addEventListener("click", () => {
+        ttsEngineProfiles.push({ name: "", base_url: "" });
+        renderTtsModelList();
+    });
+    sfTtsModelList.appendChild(addBtn);
 }
 
 function updateSttFieldsState() {
@@ -311,6 +420,11 @@ function collectSettingsFromForm() {
             parameters: ttsCapabilitiesDoc
                 ? collectTtsParamValues(sfTtsParams)
                 : { ...ttsSavedParameters },
+            // Blank rows (in-progress edits in the "Manage" list) are
+            // dropped silently rather than saved half-filled.
+            engine_profiles: ttsEngineProfiles
+                .filter((p) => p.name.trim() && p.base_url.trim())
+                .map((p) => ({ name: p.name.trim(), base_url: p.base_url.trim() })),
         },
         stt: {
             enabled: sfSttEnabled.checked,
@@ -342,6 +456,14 @@ function validateSettings(data) {
         if (paramError) return paramError;
         if (isNaN(data.tts.timeout) || data.tts.timeout < 5 || data.tts.timeout > 300) {
             return "TTS Timeout must be between 5 and 300 seconds.";
+        }
+    }
+
+    // TTS Model profiles: each must have a proper http(s) URL, whether or
+    // not TTS is currently enabled (a profile can be prepared ahead of time).
+    for (const p of data.tts.engine_profiles) {
+        if (!/^https?:\/\//.test(p.base_url)) {
+            return `TTS Model "${p.name}": Base URL must start with http:// or https://.`;
         }
     }
 

@@ -21,6 +21,7 @@ from app.config import (
     PersonasConfig,
     STTConfig,
     TTSConfig,
+    TTSEngineProfile,
 )
 from tests.factories import make_chatrooms, make_personas, make_settings
 
@@ -334,6 +335,38 @@ class TestMCPServerConfig:
 
     def test_mcp_server_config_default_timeout_is_ten_seconds(self):
         assert MCPServerConfig(name="ok", url="http://mcp:9000").timeout == 10.0
+
+
+# ---------------------------------------------------------------------------
+# TTS engine profile validation ("TTS Model" dropdown)
+# ---------------------------------------------------------------------------
+
+class TestTTSEngineProfile:
+    def test_tts_engine_profile_schemeless_url_rejected(self):
+        with pytest.raises(ValidationError, match="must start with http"):
+            TTSEngineProfile(name="OmniVoice", base_url="localhost:8181")
+
+    @pytest.mark.parametrize("url", ["http://localhost:8181", "https://tts.example.com"])
+    def test_tts_engine_profile_valid_schemes_accepted(self, url):
+        assert TTSEngineProfile(name="OmniVoice", base_url=url).base_url == url
+
+    def test_tts_engine_profile_trailing_slash_stripped(self):
+        profile = TTSEngineProfile(name="OmniVoice", base_url="http://localhost:8181/")
+        assert profile.base_url == "http://localhost:8181"
+
+    def test_tts_config_engine_profiles_default_to_every_known_engine(self):
+        """No engine_profiles configured -> pre-populated with every engine
+        tts-serve supports (see DEFAULT_TTS_ENGINE_PROFILES), so the "TTS
+        Model" dropdown works with zero user configuration."""
+        names = [p.name for p in TTSConfig().engine_profiles]
+        assert names == [
+            "OmniVoice", "Chatterbox", "Qwen3-TTS", "Qwen3-TTS (MLX)",
+            "Faster Qwen3-TTS", "dots.tts", "Index-TTS", "LuxTTS",
+        ]
+
+    def test_tts_config_engine_profiles_explicit_list_overrides_defaults(self):
+        cfg = TTSConfig(engine_profiles=[{"name": "OmniVoice", "base_url": "http://localhost:8181"}])
+        assert cfg.engine_profiles == [TTSEngineProfile(name="OmniVoice", base_url="http://localhost:8181")]
 
 
 # ---------------------------------------------------------------------------

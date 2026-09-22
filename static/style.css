@@ -1430,6 +1430,35 @@ html, body {
     white-space: nowrap;
 }
 
+/* Inline "TTS Model" profile editor (Manage button toggles this). Each row
+   is one named engine endpoint: a name input, a URL input, and a remove
+   button. */
+.tts-model-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.tts-model-list-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tts-model-list-row input[type="text"] {
+    flex: 1;
+    min-width: 0;
+}
+
+.tts-model-list-row input.tts-model-name {
+    flex: 0 0 40%;
+}
+
 /* ==========================================================================
    Chat Rooms Editor Modal
    ========================================================================== */

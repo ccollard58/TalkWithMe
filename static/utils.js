@@ -48,6 +48,20 @@ function comparePersonasByName(a, b) {
     return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
 }
 
+/**
+ * Strip screenplay-style stage directions (e.g. "*lowers voice, leaning in*")
+ * from text destined for TTS. These are visual/action cues with nothing to
+ * voice, so they should never reach the TTS engine. Collapses any leftover
+ * whitespace left behind by the removal.
+ *
+ * @param {string} text - Raw text (persona reply) to clean.
+ * @returns {string} Text with asterisk-wrapped stage directions removed.
+ */
+function stripStageDirections(text) {
+    if (typeof text !== 'string') return text;
+    return text.replace(/\*[^*]+\*/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 /** Escape HTML special characters to prevent XSS in dynamically rendered text. */
 function escapeHtml(str) {
     if (typeof str !== 'string') return str;

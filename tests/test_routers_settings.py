@@ -221,6 +221,42 @@ class TestUpdateSettings:
         assert resp.status_code == 422
 
 
+class TestTTSEngineProfiles:
+    """The "TTS Model" dropdown's engine_profiles list: each engine
+    (OmniVoice, Qwen3-TTS, dots.tts, ...) is its own running server, so a
+    profile is just a friendly name for a base_url."""
+
+    def test_defaults_to_every_known_engine(self, client):
+        """No engine_profiles configured -> pre-populated with every engine
+        tts-serve supports, matching app.config.DEFAULT_TTS_ENGINE_PROFILES."""
+        names = [p["name"] for p in client.get("/api/settings").json()["tts"]["engine_profiles"]]
+        assert names == [
+            "OmniVoice", "Chatterbox", "Qwen3-TTS", "Qwen3-TTS (MLX)",
+            "Faster Qwen3-TTS", "dots.tts", "Index-TTS", "LuxTTS",
+        ]
+
+    def test_round_trips_through_save(self, client):
+        profiles = [
+            {"name": "OmniVoice", "base_url": "http://localhost:8181"},
+            {"name": "Qwen3-TTS", "base_url": "http://localhost:8182"},
+        ]
+        resp = client.put("/api/settings", json=base_update(
+            tts=tts_update(engine_profiles=profiles)))
+        assert resp.status_code == 200
+        assert resp.json()["tts"]["engine_profiles"] == profiles
+        assert client.get("/api/settings").json()["tts"]["engine_profiles"] == profiles
+
+    def test_schemeless_profile_url_rejected_422(self, client):
+        resp = client.put("/api/settings", json=base_update(
+            tts=tts_update(engine_profiles=[{"name": "Bad", "base_url": "localhost:9"}])))
+        assert resp.status_code == 422
+
+    def test_blank_profile_name_rejected_422(self, client):
+        resp = client.put("/api/settings", json=base_update(
+            tts=tts_update(engine_profiles=[{"name": "  ", "base_url": "http://localhost:9"}])))
+        assert resp.status_code == 422
+
+
 class TestUpdateTTSParameters:
     """M2: the generic tts.parameters map round-trips through PUT/GET, and
     T7 validation 422s garbage only when a capabilities doc is cached for

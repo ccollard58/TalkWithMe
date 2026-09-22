@@ -1,5 +1,5 @@
 {
-  "datetime": "2026-09-16T13:03:41.369318-04:00",
+  "datetime": "2026-09-21T06:43:52.131851-04:00",
   "messages": [
     {
       "id": "65f71cb4-b78f-463d-8558-7bb93fec18be",
@@ -177,6 +177,18 @@
         "940ff844-8160-47a8-be08-91d66bac2b7e_0.wav",
         "940ff844-8160-47a8-be08-91d66bac2b7e_1.wav"
       ]
+    },
+    {
+      "id": "5618d6a8-e8e4-4a85-85fe-ac8df72778ad",
+      "sender": "USER",
+      "text": "You have arrived at your destination. destination fucked.",
+      "audio": []
+    },
+    {
+      "id": "e83f93ce-0048-4e8e-a8af-8dc0dd988a43",
+      "sender": "USER",
+      "text": "why?",
+      "audio": []
     }
   ]
 }

@@ -167,8 +167,59 @@ and/or `seed` directly under `tts:` loads fine: those keys are folded into
 `parameters` at startup and rewritten in the new shape on the next settings
 save.
 
-Refer to the [tts-serve](https://github.com/scorbo2/tts-serve) documentation
-to see the full list of supported TTS servers!
+[tts-serve](https://github.com/scorbo2/tts-serve) currently supports these engines
+(check its README for the up-to-date list, as new engines are added regularly):
+
+- Chatterbox
+- OmniVoice
+- Qwen3-TTS
+- Qwen3-TTS (MLX)
+- Faster Qwen3-TTS
+- dots.tts
+- Index-TTS
+- LuxTTS
+
+Each engine is its own standalone server process (its own venv, its own port);
+running multiple engines at once just means running multiple `tts-serve`
+processes, one per engine.
+
+### Switching TTS models
+
+The Servers dialog's **TTS Model** dropdown lets you switch which engine
+TalkWithMe talks to without retyping a Base URL every time. Click **Manage**
+to add/edit/remove named profiles (a name plus a base URL); picking one from
+the dropdown swaps `tts.base_url` to that URL and immediately re-probes
+`/capabilities` for it.
+
+By default, `tts.engine_profiles` is pre-populated with an entry for every
+engine `tts-serve` supports (see the list above), each pointing at
+`http://localhost:<port>` (8181 for OmniVoice, 8182 for Chatterbox, 8183 for
+Qwen3-TTS, and so on — see `DEFAULT_TTS_ENGINE_PROFILES` in `app/config.py`
+for the full mapping). Selecting a profile whose engine isn't actually
+running just shows "not reachable"; there's no other configuration to do.
+
+On a GPU node, [`hpc/start_all_tts_engines.sh`](hpc/start_all_tts_engines.sh)
+starts every engine you have installed, each on its default port — matching
+the built-in profiles above — so once it's run, switching engines in the
+running app is just picking a different dropdown entry (no settings.yaml
+editing, no restart). It skips any engine whose install directory doesn't
+exist rather than failing outright, since most setups won't have every
+engine installed; see the script's header comment for the on-disk layout
+each engine needs (`<engine_dir>/.venv` + `<engine_dir>/tts-serve/`) and the
+per-engine install docs linked from the
+[tts-serve README](https://github.com/scorbo2/tts-serve). Running every
+engine at once can exceed a single GPU's VRAM — disable ones you don't need
+with `ENABLE_<ENGINE>=0` (e.g. `ENABLE_CHATTERBOX=0`) before running the
+script.
+
+If TalkWithMe runs on your workstation while the engines run on a remote HPC
+node, the tunneling scripts in `hpc/` (`tunnel_jarvis_tts.sh`,
+`connect_tunnel.ps1`) forward every default engine port, not just one — so
+tunnel setup doesn't need to change when you switch which engine you're
+using. `connect_tunnel.ps1` also reads the exact set of ports
+`start_all_tts_engines.sh` actually started (via `~/.llama_server_info`)
+when launched through `start_servers_2gpu.sh`, `start_servers_h100sxm.sh`, or
+one of the `hpc/llama_server*.slurm` jobs.
 
 ### Personas
 

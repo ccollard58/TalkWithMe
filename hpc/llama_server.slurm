@@ -69,11 +69,28 @@ LLM_GPUS="0,1"
 TTS_GPU="2"
 STT_GPU="3"
 
+# Optionally start any additional installed tts-serve engines (beyond the
+# OmniVoice instance started below) via start_all_tts_engines.sh, so the
+# app's "TTS Model" dropdown has more than one option. Best-effort: skipped
+# silently if the script isn't present (repo not checked out on this
+# cluster). A fixed path is used rather than a BASH_SOURCE-relative one,
+# since SLURM may execute from a spool copy that doesn't preserve it.
+TALKWITHME_HPC_DIR="${TALKWITHME_HPC_DIR:-$HOME/TalkWithMe/hpc}"
+TTS_PORTS="$TTS_PORT"
+if [[ -x "$TALKWITHME_HPC_DIR/start_all_tts_engines.sh" ]]; then
+    echo "Starting additional TTS engines via start_all_tts_engines.sh (GPU $TTS_GPU)"
+    TTS_GPU="$TTS_GPU" LOG_DIR="$HOME" PID_DIR="$HOME" ENABLE_OMNIVOICE=0 \
+        "$TALKWITHME_HPC_DIR/start_all_tts_engines.sh" || true
+    EXTRA_PORTS="$(sed -n 's/^ports=//p' "$HOME/.tts_engines_info" 2>/dev/null || true)"
+    [[ -n "$EXTRA_PORTS" ]] && TTS_PORTS="$TTS_PORT,$EXTRA_PORTS"
+fi
+
 NODE_HOST="$(hostname -s)"
 {
     echo "host=$NODE_HOST"
     echo "llm_port=$LLM_PORT"
     echo "tts_port=$TTS_PORT"
+    echo "tts_ports=$TTS_PORTS"
     echo "stt_port=$STT_PORT"
     echo "job_id=$SLURM_JOB_ID"
 } > "$HOME/.llama_server_info"

@@ -186,6 +186,13 @@ class LLMSettingsRequest(BaseModel):
     stop: List[str] = Field(default_factory=list)
 
 
+class TTSEngineProfileModel(BaseModel):
+    """A named TTS engine endpoint (e.g. "OmniVoice" -> http://host:8181),
+    for the Servers dialog's "TTS Model" dropdown."""
+    name: str = Field(..., min_length=1)
+    base_url: str = Field(..., min_length=1)
+
+
 class TTSSettingsRequest(BaseModel):
     """TTS configuration from the settings editor.
 
@@ -202,6 +209,10 @@ class TTSSettingsRequest(BaseModel):
     timeout: float = Field(..., ge=5, le=300)
     streaming: bool = False
     parameters: Dict[str, Any] = Field(default_factory=dict)
+    # Named engine profiles for the "TTS Model" dropdown. Each engine
+    # (OmniVoice, Qwen3-TTS, dots.tts, ...) is a separate running server;
+    # picking a profile just switches base_url to that server's URL.
+    engine_profiles: List[TTSEngineProfileModel] = Field(default_factory=list)
 
 
 class STTSettingsRequest(BaseModel):
@@ -255,6 +266,7 @@ class TTSSettingsResponse(BaseModel):
     timeout: float
     streaming: bool
     parameters: Dict[str, Any] = Field(default_factory=dict)
+    engine_profiles: List[TTSEngineProfileModel] = Field(default_factory=list)
 
 
 class STTSettingsResponse(BaseModel):

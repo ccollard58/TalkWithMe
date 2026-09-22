@@ -135,6 +135,12 @@ const sfLlmStop = document.getElementById("sf-llm-stop");
 // Settings form fields — TTS
 const sfTtsEnabled = document.getElementById("sf-tts-enabled");
 const sfTtsFields = document.getElementById("sf-tts-fields");
+// "TTS Model" dropdown: switches sf-tts-base-url to a named profile's URL
+// (each engine is its own running server; see TTSEngineProfile). The
+// "Manage" button reveals an inline editor for adding/removing profiles.
+const sfTtsModelSelect = document.getElementById("sf-tts-model-select");
+const sfTtsModelManageBtn = document.getElementById("sf-tts-model-manage-btn");
+const sfTtsModelList = document.getElementById("sf-tts-model-list");
 const sfTtsBaseUrl = document.getElementById("sf-tts-base-url");
 // Reconnect button beside the Base URL (plan M4.1): re-probe the URL
 // currently in the field (which may be an unsaved edit) and re-render the

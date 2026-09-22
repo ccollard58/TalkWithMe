@@ -3,13 +3,20 @@ set -Eeuo pipefail
 
 # Start or restart the TalkWithMe services on an already allocated gpu-h100sxm node.
 # Run this from the node while the allocation is active; it does not submit a job.
+#
+# TTS startup is delegated to start_all_tts_engines.sh (same directory as
+# this script), which starts every tts-serve engine it finds installed —
+# not just OmniVoice — each on its own port. TTS_PORT below still controls
+# OmniVoice's port specifically (back-compat with existing overrides); set
+# ENABLE_<ENGINE>=0 to skip an installed engine you don't want running now.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---- edit these for your setup ----
 LLAMA_CPP_DIR="${LLAMA_CPP_DIR:-$HOME/llama.cpp}"
 MODEL_PATH="${MODEL_PATH:-$HOME/llama.cpp/models/gemma-4-26B-A4B.Q8_0.gguf}"
 LLM_PORT="${LLM_PORT:-9090}"
 
-OMNIVOICE_DIR="${OMNIVOICE_DIR:-$HOME/OmniVoice}"
 TTS_PORT="${TTS_PORT:-8181}"
 
 WHISPER_DIR="${WHISPER_DIR:-$HOME/whisper-fastapi}"
@@ -18,7 +25,6 @@ STT_PORT="${STT_PORT:-5000}"
 # ------------------------------------
 
 LLAMA_BIN="$LLAMA_CPP_DIR/build/bin/llama-server"
-OMNIVOICE_PY="$OMNIVOICE_DIR/.venv/bin/python"
 WHISPER_PY="$WHISPER_DIR/.venv/bin/python"
 
 LLM_GPUS="0,1"
@@ -48,7 +54,7 @@ fi
 # and having 9.1's lib dir in LD_LIBRARY_PATH globally shadows OmniVoice's
 # libcudnn_engines_runtime_compiled.so.9.24.x, causing CUDNN_STATUS_SUBLIBRARY_LOADING_FAILED.
 
-for required_file in "$LLAMA_BIN" "$OMNIVOICE_PY" "$WHISPER_PY"; do
+for required_file in "$LLAMA_BIN" "$WHISPER_PY"; do
     if [[ ! -x "$required_file" ]]; then
         echo "ERROR: executable not found: $required_file" >&2
         exit 1
@@ -107,36 +113,35 @@ stop_port_processes() {
 
 # Match the configured commands first, then clear anything still holding a service port.
 stop_matching_processes "llama-server" "$LLAMA_BIN"
-stop_matching_processes "OmniVoice" "$OMNIVOICE_PY.*server_omnivoice.py"
 stop_matching_processes "whisper-fastapi" "$WHISPER_PY.*whisper_fastapi.py"
-for port in "$LLM_PORT" "$TTS_PORT" "$STT_PORT"; do
+for port in "$LLM_PORT" "$STT_PORT"; do
     stop_port_processes "$port"
 done
 
 NODE_HOST="$(hostname -s)"
+
+echo "Starting services on $NODE_HOST"
+
+echo "Starting TTS engines on $NODE_HOST (GPU $TTS_GPU)"
+TTS_GPU="$TTS_GPU" LOG_DIR="$LOG_DIR" PID_DIR="$PID_DIR" OMNIVOICE_PORT="$TTS_PORT" \
+    "$SCRIPT_DIR/start_all_tts_engines.sh"
+
+# start_all_tts_engines.sh publishes exactly which ports it started; fold
+# that into the shared info file connect_tunnel.ps1 reads (tts_port stays
+# OmniVoice's port for back-compat with older tunnel scripts/info files).
+TTS_PORTS="$(sed -n 's/^ports=//p' "$HOME/.tts_engines_info" 2>/dev/null || true)"
+
 INFO_FILE="$HOME/.llama_server_info"
 INFO_TMP="${INFO_FILE}.tmp.$$"
 {
     echo "host=$NODE_HOST"
     echo "llm_port=$LLM_PORT"
     echo "tts_port=$TTS_PORT"
+    echo "tts_ports=$TTS_PORTS"
     echo "stt_port=$STT_PORT"
     echo "launcher_pid=$$"
 } > "$INFO_TMP"
 mv -f "$INFO_TMP" "$INFO_FILE"
-
-echo "Starting services on $NODE_HOST"
-
-echo "Starting OmniVoice TTS on $NODE_HOST:$TTS_PORT (GPU $TTS_GPU)"
-(
-    cd "$OMNIVOICE_DIR/tts-serve"
-    export CUDA_VISIBLE_DEVICES="$TTS_GPU"
-    export OMNIVOICE_HOST=0.0.0.0
-    export OMNIVOICE_PORT="$TTS_PORT"
-    export OMNIVOICE_DEVICE=cuda
-    exec "$OMNIVOICE_PY" impl/server_omnivoice.py
-) > "$LOG_DIR/tts_server_${RUN_ID}.log" 2>&1 &
-echo $! > "$PID_DIR/tts.pid"
 
 echo "Starting whisper-fastapi STT on $NODE_HOST:$STT_PORT (GPU $STT_GPU)"
 (

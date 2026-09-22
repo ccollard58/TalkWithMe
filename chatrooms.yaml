@@ -2,7 +2,7 @@ chat_rooms:
 - name: chuck1
   persona_names:
   - Chuck
-  echo_chamber: false
+  echo_chamber: true
 - name: with ozzy man
   persona_names:
   - Ozzy Man
@@ -20,4 +20,4 @@ chat_rooms:
   - Mick
   - Ozzy Man
   - Steve
-  echo_chamber: false
+  echo_chamber: true

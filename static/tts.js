@@ -163,10 +163,15 @@ async function processAudioBufferQueue() {
  *   regardless of when this fetch resolves.
  */
 async function fetchTTS(personaName, text, messageId) {
+    // Screenplay-style stage directions (e.g. "*lowers voice, leaning in*")
+    // have nothing to voice; strip them before this ever reaches the engine.
+    const cleanedText = stripStageDirections(text);
+    if (!cleanedText) return null;
+
     const resp = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, persona_name: personaName }),
+        body: JSON.stringify({ text: cleanedText, persona_name: personaName }),
     });
 
     if (!resp.ok) {

@@ -76,6 +76,47 @@ class LLMSettings(BaseModel):
 _TTS_LEGACY_PARAMETER_KEYS = ("num_steps", "guidance_scale", "seed")
 
 
+class TTSEngineProfile(BaseModel):
+    """A named TTS engine endpoint (e.g. "OmniVoice" -> http://host:8181).
+
+    Each TTS engine (OmniVoice, Qwen3-TTS, dots.tts, ...) is its own server
+    process listening on its own base_url — tts-serve has no single server
+    that swaps engines in place. A profile just gives a friendly name to a
+    base_url the user already has running, so the Servers dialog dropdown
+    can switch tts.base_url without retyping it.
+    """
+    name: str = Field(..., min_length=1)
+    base_url: str = Field(..., min_length=1)
+
+    @model_validator(mode="after")
+    def _validate(self) -> "TTSEngineProfile":
+        cleaned = clean_base_url(self.base_url)
+        if not cleaned or not cleaned.startswith(("http://", "https://")):
+            raise ValueError(
+                f"TTS engine profile '{self.name}': base_url must start with http:// or https://, got {self.base_url!r}"
+            )
+        self.base_url = cleaned
+        return self
+
+
+# Every entry here matches a port default in hpc/start_all_tts_engines.sh, so
+# starting engines with that script "just works" with the dropdown out of
+# the box — no per-user config needed for the common case (docs/README).
+# These are suggestions, not a live registry: an engine not actually running
+# on its port just shows "not reachable" when selected, same as any other
+# profile. Users can add/remove/edit entries freely in the Servers dialog.
+DEFAULT_TTS_ENGINE_PROFILES = [
+    {"name": "OmniVoice", "base_url": "http://localhost:8181"},
+    {"name": "Chatterbox", "base_url": "http://localhost:8182"},
+    {"name": "Qwen3-TTS", "base_url": "http://localhost:8183"},
+    {"name": "Qwen3-TTS (MLX)", "base_url": "http://localhost:8184"},
+    {"name": "Faster Qwen3-TTS", "base_url": "http://localhost:8185"},
+    {"name": "dots.tts", "base_url": "http://localhost:8186"},
+    {"name": "Index-TTS", "base_url": "http://localhost:8187"},
+    {"name": "LuxTTS", "base_url": "http://localhost:8188"},
+]
+
+
 class TTSConfig(BaseModel):
     enabled: bool = True
     base_url: Optional[str] = None
@@ -88,6 +129,14 @@ class TTSConfig(BaseModel):
     # the server's own 422s — a hand-edited YAML with a wrong value type must
     # never crash startup.
     parameters: Dict[str, Any] = Field(default_factory=dict)
+    # Named engine endpoints for the Servers dialog's "TTS Model" dropdown
+    # (each engine is a separate running server; see TTSEngineProfile).
+    # Defaults to every engine tts-serve supports (see DEFAULT_TTS_ENGINE_PROFILES)
+    # so the dropdown is pre-populated with zero configuration; a settings.yaml
+    # that already has its own engine_profiles list overrides this entirely.
+    engine_profiles: List[TTSEngineProfile] = Field(
+        default_factory=lambda: [TTSEngineProfile(**p) for p in DEFAULT_TTS_ENGINE_PROFILES]
+    )
 
     @model_validator(mode="before")
     @classmethod
