@@ -3,6 +3,15 @@ app/services/__pycache__/
 app/routers/__pycache__/
 tests/__pycache__/
 future*.md
+<<<<<<< HEAD
+=======
+Personas/
+chatrooms/
+chatrooms.yaml
+chatrooms.yaml.*
+settings.yaml
+settings.yaml.*
+>>>>>>> 36ba034 (Issue #113 - untrack the settings and chatroom config files (#118))
 testsetup.sh
 restore.sh
 .venv/
