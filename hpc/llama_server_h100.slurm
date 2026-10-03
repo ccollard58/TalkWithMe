@@ -15,7 +15,8 @@
 
 # ---- edit these for your setup ----
 LLAMA_CPP_DIR="$HOME/llama.cpp"
-MODEL_PATH="$HOME/llama.cpp/models/gemma-4-26B-A4B.Q8_0.gguf"   # <-- point this at your Gemma 4 26B A4B .gguf
+# MODEL_PATH="$HOME/llama.cpp/models/gemma-4-26B-A4B.Q8_0.gguf"   # <-- point this at your Gemma 4 26B A4B .gguf
+MODEL_PATH="$HOME/llama.cpp/models/Qwen3.8-27B-UD-Q8_K_XL.gguf"
 LLM_PORT=9090
 
 OMNIVOICE_DIR="$HOME/OmniVoice"   # venv + tts-serve checkout, see build_tts_stt.ps1
@@ -68,23 +69,41 @@ fi
 AUX_GPU="0"
 LLM_GPU="1"
 
-# Optionally start any additional installed tts-serve engines (beyond the
-# OmniVoice instance started below) via start_all_tts_engines.sh, so the
-# app's "TTS Model" dropdown has more than one option. Best-effort: skipped
-# silently if the script isn't present (repo not checked out on this
-# cluster). A fixed path is used rather than a BASH_SOURCE-relative one,
-# since SLURM may execute from a spool copy that doesn't preserve it.
-TALKWITHME_HPC_DIR="${TALKWITHME_HPC_DIR:-$HOME/TalkWithMe/hpc}"
-TTS_PORTS="$TTS_PORT"
-if [[ -x "$TALKWITHME_HPC_DIR/start_all_tts_engines.sh" ]]; then
-    echo "Starting additional TTS engines via start_all_tts_engines.sh (GPU $AUX_GPU)"
-    TTS_GPU="$AUX_GPU" LOG_DIR="$HOME" PID_DIR="$HOME" ENABLE_OMNIVOICE=0 \
-        "$TALKWITHME_HPC_DIR/start_all_tts_engines.sh" || true
-    EXTRA_PORTS="$(sed -n 's/^ports=//p' "$HOME/.tts_engines_info" 2>/dev/null || true)"
-    [[ -n "$EXTRA_PORTS" ]] && TTS_PORTS="$TTS_PORT,$EXTRA_PORTS"
+# Start every installed CUDA tts-serve engine via start_all_tts_engines.sh.
+# Best-effort: skipped silently if the script isn't present (repo not checked
+# out on this cluster). A fixed path is used rather than a BASH_SOURCE-relative
+# one, since SLURM may execute from a spool copy that doesn't preserve it.
+TTS_ENGINES_SCRIPT=""
+for hpc_dir in "${TALKWITHME_HPC_DIR:-}" "${SLURM_SUBMIT_DIR:-}" "$HOME/TalkWithMe/hpc" "$HOME/hpc" "$HOME"; do
+    if [[ -n "$hpc_dir" && -f "$hpc_dir/start_all_tts_engines.sh" ]]; then
+        TTS_ENGINES_SCRIPT="$hpc_dir/start_all_tts_engines.sh"
+        break
+    fi
+done
+TTS_PORTS=""
+if [[ -n "$TTS_ENGINES_SCRIPT" ]]; then
+    echo "Starting TTS engines via $TTS_ENGINES_SCRIPT (GPU $AUX_GPU)"
+    TTS_GPU="$AUX_GPU" LOG_DIR="$HOME" PID_DIR="$HOME" ENABLE_OMNIVOICE=1 OMNIVOICE_PORT="$TTS_PORT" \
+        bash "$TTS_ENGINES_SCRIPT" || echo "WARNING: start_all_tts_engines.sh failed; see output above." >&2
+    TTS_PORTS="$(sed -n 's/^ports=//p' "$HOME/.tts_engines_info" 2>/dev/null || true)"
+else
+    echo "WARNING: start_all_tts_engines.sh not found (set TALKWITHME_HPC_DIR); starting only OmniVoice." >&2
 fi
 
 NODE_HOST="$(hostname -s)"
+if [[ ",$TTS_PORTS," != *",$TTS_PORT,"* ]]; then
+    echo "Starting OmniVoice TTS on $NODE_HOST:$TTS_PORT (GPU $AUX_GPU)"
+    (
+        cd "$OMNIVOICE_DIR/tts-serve"
+        export CUDA_VISIBLE_DEVICES="$AUX_GPU"
+        export OMNIVOICE_HOST=0.0.0.0
+        export OMNIVOICE_PORT="$TTS_PORT"
+        export OMNIVOICE_DEVICE=cuda
+        exec "$OMNIVOICE_PY" impl/server_omnivoice.py
+    ) > "$HOME/tts_server_${SLURM_JOB_ID}.log" 2>&1 &
+    TTS_PORTS="${TTS_PORT}${TTS_PORTS:+,$TTS_PORTS}"
+fi
+
 {
     echo "host=$NODE_HOST"
     echo "llm_port=$LLM_PORT"
@@ -93,16 +112,6 @@ NODE_HOST="$(hostname -s)"
     echo "stt_port=$STT_PORT"
     echo "job_id=$SLURM_JOB_ID"
 } > "$HOME/.llama_server_info"
-
-echo "Starting OmniVoice TTS on $NODE_HOST:$TTS_PORT (GPU $AUX_GPU)"
-(
-    cd "$OMNIVOICE_DIR/tts-serve"
-    export CUDA_VISIBLE_DEVICES="$AUX_GPU"
-    export OMNIVOICE_HOST=0.0.0.0
-    export OMNIVOICE_PORT="$TTS_PORT"
-    export OMNIVOICE_DEVICE=cuda
-    exec "$OMNIVOICE_PY" impl/server_omnivoice.py
-) > "$HOME/tts_server_${SLURM_JOB_ID}.log" 2>&1 &
 
 echo "Starting whisper-fastapi STT on $NODE_HOST:$STT_PORT (GPU $AUX_GPU)"
 (
@@ -124,4 +133,3 @@ exec "$LLAMA_BIN" \
     --cors-origins localhost \
     -ngl 999 \
     --tensor-split 1
-

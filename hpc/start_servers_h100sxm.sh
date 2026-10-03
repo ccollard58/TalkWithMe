@@ -14,7 +14,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---- edit these for your setup ----
 LLAMA_CPP_DIR="${LLAMA_CPP_DIR:-$HOME/llama.cpp}"
-MODEL_PATH="${MODEL_PATH:-$HOME/llama.cpp/models/gemma-4-26B-A4B.Q8_0.gguf}"
+# MODEL_PATH="$HOME/llama.cpp/models/gemma-4-26B-A4B.Q8_0.gguf"   # <-- point this at your Gemma 4 26B A4B .gguf
+MODEL_PATH="$HOME/llama.cpp/models/Qwen3.8-27B-UD-Q8_K_XL.gguf"
 LLM_PORT="${LLM_PORT:-9090}"
 
 TTS_PORT="${TTS_PORT:-8181}"

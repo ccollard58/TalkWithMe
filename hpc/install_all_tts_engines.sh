@@ -130,7 +130,7 @@ install_chatterbox() {
     ensure_venv "$dir"
 
     "$dir/.venv/bin/python" -m pip install -U pip
-    "$dir/.venv/bin/python" -m pip install -U chatterbox-tts
+    "$dir/.venv/bin/python" -m pip install --force-reinstall --no-deps "git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2"
 
     install_tts_serve "$dir"
 

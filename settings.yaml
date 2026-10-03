@@ -10,11 +10,22 @@ tts:
   enabled: true
   base_url: http://localhost:8181
   timeout: 120.0
-  streaming: true
+  streaming: false
   parameters:
-    num_steps: 16
-    guidance_scale: 1.5
+    num_steps: 32
+    guidance_scale: 2
     denoise: true
+  engine_profiles:
+  - name: omnivoice
+    base_url: http://localhost:8181
+  - name: luxtts
+    base_url: http://localhost:8188
+  - name: qwen3tts
+    base_url: http://localhost:8183
+  - name: dots_tts
+    base_url: http://localhost:8186
+  - name: chatterbox
+    base_url: http://localhost:8182
 stt:
   enabled: true
   base_url: http://localhost:5000

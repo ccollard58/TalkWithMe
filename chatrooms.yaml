@@ -20,4 +20,5 @@ chat_rooms:
   - Mick
   - Ozzy Man
   - Steve
-  echo_chamber: true
+  - Chuck
+  echo_chamber: false
