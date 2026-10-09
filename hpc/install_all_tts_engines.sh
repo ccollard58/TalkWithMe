@@ -87,10 +87,16 @@ install_tts_serve() {
         git clone --branch "$TTS_SERVE_BRANCH" "$TTS_SERVE_REPO" "$engine_dir/tts-serve"
     fi
 
-    "$engine_dir/.venv/bin/python" -m pip install -U pip
-    "$engine_dir/.venv/bin/python" -m pip install \
-        "$engine_dir/tts-serve/tts-engine-common" \
-        fastapi uvicorn loguru soundfile
+    local venv_py="$engine_dir/.venv/bin/python"
+    local deps=("$engine_dir/tts-serve/tts-engine-common" fastapi uvicorn loguru soundfile)
+    if "$venv_py" -m pip --version >/dev/null 2>&1; then
+        "$venv_py" -m pip install -U pip
+        "$venv_py" -m pip install "${deps[@]}"
+    else
+        # uv-created venvs (Index-TTS) ship without pip
+        command -v uv >/dev/null 2>&1 || die "$engine_dir/.venv has no pip and uv is not installed."
+        uv pip install --python "$venv_py" "${deps[@]}"
+    fi
 }
 
 ensure_venv() {
@@ -146,6 +152,7 @@ install_qwen3tts() {
 
     "$dir/.venv/bin/python" -m pip install -U pip
     "$dir/.venv/bin/python" -m pip install -U qwen-tts
+    "$dir/.venv/bin/python" -m pip install "transformers==4.57.3"
 
     install_tts_serve "$dir"
 
@@ -161,6 +168,8 @@ install_faster_qwen3tts() {
 
     "$dir/.venv/bin/python" -m pip install -U pip
     "$dir/.venv/bin/python" -m pip install -U faster-qwen3-tts
+    # transformers 5.x breaks qwen_tts (MimiConfig has no rope_theta); qwen-tts targets 4.57.x
+    "$dir/.venv/bin/python" -m pip install "transformers==4.57.3"
 
     install_tts_serve "$dir"
 

@@ -51,6 +51,7 @@ _HISTORY_LOCK = threading.Lock()
 # The staging registry is in-memory, so a process restart between the upload
 # and the row creation leaves the (valid) files on disk unreferenced.
 _pending_audio: Dict[Tuple[str, str], List[str]] = {}
+_pending_audio_sources: Dict[Tuple[str, str], Dict[str, str]] = {}
 
 
 def _room_dir(room_name: str) -> Path:
@@ -201,6 +202,9 @@ def persist_message(room_name: str, message: ChatMessage, message_id: str) -> st
             "text": message.content,
             "audio": list(_pending_audio.pop((room_name, message_id), [])),
         }
+        audio_sources = _pending_audio_sources.pop((room_name, message_id), {})
+        if audio_sources:
+            entry["audio_sources"] = audio_sources
         data["messages"].append(entry)
 
         _write_history_file(room_name, data)
@@ -219,6 +223,7 @@ def persist_audio(
     message_id: str,
     audio_base64: str,
     mime_type: Optional[str] = None,
+    tts_server: Optional[str] = None,
 ) -> str:
     """Save an audio file for a message and update its audio list in history.
 
@@ -247,6 +252,10 @@ def persist_audio(
             with open(room / filename, "wb") as f:
                 f.write(raw)
             _pending_audio.setdefault((room_name, message_id), []).append(filename)
+            if tts_server:
+                _pending_audio_sources.setdefault((room_name, message_id), {})[
+                    filename
+                ] = tts_server
             logger.warning(
                 "Audio for message %s in room '%s' arrived before the message "
                 "row was persisted; staged as '%s'",
@@ -258,6 +267,8 @@ def persist_audio(
         with open(room / filename, "wb") as f:
             f.write(raw)
         msg_found.setdefault("audio", []).append(filename)
+        if tts_server:
+            msg_found.setdefault("audio_sources", {})[filename] = tts_server
         _write_history_file(room_name, data)
 
     logger.debug("Persisted audio '%s' for message %s in room '%s'", filename, message_id, room_name)
@@ -324,6 +335,7 @@ def delete_message(room_name: str, message_id: str) -> bool:
         #    files. Best-effort — a vanished staged file changes nothing.
         for filename in _pending_audio.pop((room_name, message_id), []):
             (room / filename).unlink(missing_ok=True)
+        _pending_audio_sources.pop((room_name, message_id), None)
 
         # 3. Prefix sweep: closes the race where a concurrent upload landed
         #    in the staging path AFTER step 2 ran (row already gone).
@@ -373,6 +385,8 @@ def clear_room(room_name: str) -> None:
     with _HISTORY_LOCK:
         for key in [k for k in _pending_audio if k[0] == room_name]:
             _pending_audio.pop(key, None)
+        for key in [k for k in _pending_audio_sources if k[0] == room_name]:
+            _pending_audio_sources.pop(key, None)
 
         room = _room_dir(room_name)
         if not room.exists():
@@ -406,6 +420,8 @@ def delete_room(room_name: str) -> None:
     with _HISTORY_LOCK:
         for key in [k for k in _pending_audio if k[0] == room_name]:
             _pending_audio.pop(key, None)
+        for key in [k for k in _pending_audio_sources if k[0] == room_name]:
+            _pending_audio_sources.pop(key, None)
 
         room = _room_dir(room_name)
         if not room.exists():

@@ -49,6 +49,7 @@ let isPlayingAudioBuffer = false;
 let pendingUserMessageId = null; // UUID generated before sending, used for STT audio
 // UUID issued by the server in the "start" event; stamped onto TTS items at enqueue time
 let currentAssistantMessageId = null;
+let currentAssistantRoom = "default";
 let currentAssistantRow = null; // The active assistant bubble row (updated on each "start" event)
 
 const THEME_STORAGE_KEY = "talkwithme_theme";

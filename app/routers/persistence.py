@@ -64,7 +64,9 @@ def upload_audio(
         )
 
     try:
-        filename = persist_audio(room, req.message_id, req.audio_base64, req.mime_type)
+        filename = persist_audio(
+            room, req.message_id, req.audio_base64, req.mime_type, req.tts_server
+        )
         return {"status": "saved", "filename": filename}
     except Exception as exc:
         logger.error("Failed to persist audio for message %s: %s", req.message_id, exc)

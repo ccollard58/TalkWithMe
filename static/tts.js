@@ -39,7 +39,12 @@ function enqueueTTS(personaName, text) {
     // Capture the current assistant message ID so this audio request
     // knows which message it belongs to, even if the global ID changes
     // before the async fetch completes.
-    audioQueue.push({ personaName, text, messageId: currentAssistantMessageId });
+    audioQueue.push({
+        personaName,
+        text,
+        messageId: currentAssistantMessageId,
+        roomName: currentAssistantRoom,
+    });
     processAudioQueue();
 }
 
@@ -49,7 +54,9 @@ async function processAudioQueue() {
 
     const item = audioQueue.shift();
     try {
-        const audioBuffer = await fetchTTS(item.personaName, item.text, item.messageId);
+        const audioBuffer = await fetchTTS(
+            item.personaName, item.text, item.messageId, item.roomName
+        );
         if (audioBuffer) {
             await playAudio(audioBuffer);
         }
@@ -99,7 +106,12 @@ function enqueueStreamingTTS(personaName, text) {
     // Stamp the current message ID at enqueue time. It was issued by the
     // server in the "start" event, so it is already correct for this
     // response — no backfilling needed when "done" arrives.
-    ttsRequestQueue.push({ personaName, text, messageId: currentAssistantMessageId });
+    ttsRequestQueue.push({
+        personaName,
+        text,
+        messageId: currentAssistantMessageId,
+        roomName: currentAssistantRoom,
+    });
     processTTSRequests();
 }
 
@@ -114,7 +126,9 @@ async function processTTSRequests() {
 
     const item = ttsRequestQueue.shift();
     try {
-        const audioBuffer = await fetchTTS(item.personaName, item.text, item.messageId);
+        const audioBuffer = await fetchTTS(
+            item.personaName, item.text, item.messageId, item.roomName
+        );
         if (audioBuffer) {
             audioBufferQueue.push(audioBuffer);
             processAudioBufferQueue();
@@ -162,7 +176,7 @@ async function processAudioBufferQueue() {
  *   Stamped at enqueue time from the "start" event, so it is correct
  *   regardless of when this fetch resolves.
  */
-async function fetchTTS(personaName, text, messageId) {
+async function fetchTTS(personaName, text, messageId, roomName) {
     // Screenplay-style stage directions (e.g. "*lowers voice, leaning in*")
     // have nothing to voice; strip them before this ever reaches the engine.
     const cleanedText = stripStageDirections(text);
@@ -184,11 +198,11 @@ async function fetchTTS(personaName, text, messageId) {
 
     // Persist the audio against the message it was enqueued for.
     if (messageId) {
-        uploadAudio(currentChatRoom, messageId, data.audio_base64, "audio/wav")
+        uploadAudio(roomName || currentChatRoom, messageId, data.audio_base64, "audio/wav", data.tts_server)
             .then(result => {
                 if (result && result.filename) {
                     // Inject a playback button into the live chat bubble
-                    addAudioButtonToAssistantMessage(messageId, result.filename);
+                    addAudioButtonToAssistantMessage(messageId, result.filename, data.tts_server);
                 }
             })
             .catch(err => console.warn("Failed to persist TTS audio:", err));
@@ -223,4 +237,3 @@ function playAudio(buffer) {
         source.start();
     });
 }
-

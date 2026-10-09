@@ -120,6 +120,7 @@ class TestTTSProxy:
 
     def test_success_forwards_reference_data_and_returns_audio(self, client, monkeypatch, tmp_path):
         _persona_cache(monkeypatch, PersonasConfig(personas=[self._tts_capable_persona(tmp_path)]))
+        _active_tts_settings(monkeypatch)
         seen = {}
 
         async def fake_synthesize(text, reference_text, audio_base64, language):
@@ -132,7 +133,11 @@ class TestTTSProxy:
         resp = client.post("/api/tts", json={"text": "hello", "persona_name": "Luna"})
 
         assert resp.status_code == 200
-        assert resp.json() == {"audio_base64": "QUJD", "sample_rate": 24000}
+        assert resp.json() == {
+            "audio_base64": "QUJD",
+            "sample_rate": 24000,
+            "tts_server": "http://tts.local:5500",
+        }
         assert seen["text"] == "hello"
         assert seen["reference_text"] == "a reference transcript"
         assert seen["audio_base64"] == base64.b64encode(b"RIFF-ref").decode()

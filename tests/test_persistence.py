@@ -143,12 +143,15 @@ class TestPersistAudio:
     def test_persist_audio_existing_row_names_by_index(self):
         persistence.persist_message("room1", ChatMessage(role="user", content="hi"), "m-1")
 
-        name = persistence.persist_audio("room1", "m-1", B64_AUDIO, "audio/webm")
+        name = persistence.persist_audio(
+            "room1", "m-1", B64_AUDIO, "audio/webm", "http://tts.local:5500"
+        )
 
         assert name == "m-1_0.webm"
         assert (persistence_root_path() / "room1" / name).read_bytes() == b"RIFF-fake-wav-bytes"
         msgs = persistence.load_history("room1")
         assert msgs[0]["audio"] == [name]
+        assert msgs[0]["audio_sources"] == {name: "http://tts.local:5500"}
 
     def test_persist_audio_second_upload_gets_next_index(self):
         persistence.persist_message("room1", ChatMessage(role="user", content="hi"), "m-1")
@@ -176,12 +179,15 @@ class TestPersistAudio:
         assert (persistence_root_path() / "room1" / second).exists()
 
     def test_persist_message_attaches_staged_audio(self):
-        staged = persistence.persist_audio("room1", "m-1", B64_AUDIO, "audio/webm")
+        staged = persistence.persist_audio(
+            "room1", "m-1", B64_AUDIO, "audio/webm", "http://tts.local:5500"
+        )
 
         persistence.persist_message("room1", ChatMessage(role="user", content="hi"), "m-1")
 
         msgs = persistence.load_history("room1")
         assert msgs[0]["audio"] == [staged]
+        assert msgs[0]["audio_sources"] == {staged: "http://tts.local:5500"}
 
     def test_persist_message_then_direct_audio_uses_staged_count_as_index(self):
         staged = persistence.persist_audio("room1", "m-1", B64_AUDIO, "audio/webm")

@@ -197,6 +197,7 @@ function handleSSEEvent(event) {
             // "done" — misattributed audio across turns whenever a fetch resolved
             // before "done", which is the normal timing in streaming mode.)
             currentAssistantMessageId = event.message_id || null;
+            currentAssistantRoom = currentChatRoom;
             if (currentAssistantRow && event.message_id) {
                 currentAssistantRow.dataset.messageId = event.message_id;
             }
@@ -669,9 +670,13 @@ function appendPersistedAssistantBubble(msg, roomName) {
             const playBtn = document.createElement("button");
             playBtn.className = "audio-play-btn";
             playBtn.innerHTML = "\u{1F501}"; // 🔁 play icon
-            playBtn.title = "Play audio";
+            const source = msg.audio_sources && msg.audio_sources[filename];
+            playBtn.title = source ? `Play audio (TTS server: ${source})` : "Play audio";
             playBtn.addEventListener("click", () => playPersistedAudio(roomName, filename));
             audioContainer.appendChild(playBtn);
+            if (source) {
+                appendAudioSourceLabel(audioContainer, source);
+            }
         }
         content.appendChild(nameEl);
         content.appendChild(bubble);
@@ -721,7 +726,7 @@ async function playPersistedAudio(roomName, filename) {
  * @param {string} messageId - The message ID to locate the bubble by.
  * @param {string} filename - The persisted audio filename.
  */
-function addAudioButtonToAssistantMessage(messageId, filename) {
+function addAudioButtonToAssistantMessage(messageId, filename, ttsServer) {
     const row = messagesEl.querySelector(`.message-row.assistant[data-message-id="${messageId}"]`);
     if (!row) {
         console.warn("addAudioButtonToAssistantMessage: no bubble found for message", messageId);
@@ -749,9 +754,24 @@ function addAudioButtonToAssistantMessage(messageId, filename) {
     const playBtn = document.createElement("button");
     playBtn.className = "audio-play-btn";
     playBtn.innerHTML = "\u{1F501}"; // play icon
-    playBtn.title = "Play audio";
+    playBtn.title = ttsServer ? `Play audio (TTS server: ${ttsServer})` : "Play audio";
     playBtn.addEventListener("click", () => playPersistedAudio(currentChatRoom, filename));
     audioContainer.appendChild(playBtn);
+    if (ttsServer) {
+        appendAudioSourceLabel(audioContainer, ttsServer);
+    }
+}
+
+function appendAudioSourceLabel(audioContainer, ttsServer) {
+    const existing = Array.from(audioContainer.querySelectorAll(".audio-source"))
+        .some(label => label.dataset.ttsServer === ttsServer);
+    if (existing) return;
+
+    const label = document.createElement("span");
+    label.className = "audio-source";
+    label.dataset.ttsServer = ttsServer;
+    label.textContent = `TTS: ${ttsServer}`;
+    audioContainer.appendChild(label);
 }
 
 /**

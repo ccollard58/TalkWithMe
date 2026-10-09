@@ -48,6 +48,7 @@ def isolated_app_state(tmp_path, monkeypatch):
 
     # Module-level registries that survive across tests.
     persistence._pending_audio.clear()
+    persistence._pending_audio_sources.clear()
     tool_registry.reset()
     # The TTS capabilities cache (single slot, docs and failures alike):
     # a doc cached by one test must not leak into the next.
@@ -70,6 +71,7 @@ def isolated_app_state(tmp_path, monkeypatch):
     yield
 
     persistence._pending_audio.clear()
+    persistence._pending_audio_sources.clear()
     tool_registry.reset()
     tts_client.invalidate_capabilities()
     llm_auth.invalidate_llm_api_key()

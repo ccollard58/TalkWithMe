@@ -19,9 +19,13 @@ class TestUploadAudio:
 
         resp = client.post("/api/persist/audio?room=TNG",
                            json={"message_id": "msg-1", "audio_base64": b64(AUDIO_BYTES),
-                                 "mime_type": "audio/webm"})
+                                 "mime_type": "audio/webm",
+                                 "tts_server": "http://tts.local:5500"})
         assert resp.status_code == 200
         assert resp.json() == {"status": "saved", "filename": "msg-1_0.webm"}
+        assert _load_messages(None, "TNG")[0]["audio_sources"] == {
+            "msg-1_0.webm": "http://tts.local:5500"
+        }
 
     def test_second_upload_increments_index(self, client, persistence_root):
         persist_message("TNG", ChatMessage(role="user", content="hi"), "msg-1")
@@ -41,7 +45,8 @@ class TestUploadAudio:
     def test_upload_before_message_row_is_staged(self, client, persistence_root):
         resp = client.post("/api/persist/audio?room=TNG",
                            json={"message_id": "msg-2", "audio_base64": b64(AUDIO_BYTES),
-                                 "mime_type": "audio/webm"})
+                                 "mime_type": "audio/webm",
+                                 "tts_server": "http://tts.local:5500"})
         assert resp.status_code == 200
         filename = resp.json()["filename"]
         # Staged names carry the message id and a "pending" marker.
@@ -53,6 +58,9 @@ class TestUploadAudio:
         persist_message("TNG", ChatMessage(role="user", content="hi"), "msg-2")
         messages = _load_messages(persistence_root, "TNG")
         assert messages[0]["audio"] == [filename]
+        assert messages[0]["audio_sources"] == {
+            filename: "http://tts.local:5500"
+        }
 
     def test_upload_without_mime_type_falls_back_to_bin(self, client, persistence_root):
         persist_message("TNG", ChatMessage(role="user", content="hi"), "msg-3")

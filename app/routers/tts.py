@@ -137,6 +137,7 @@ async def tts_proxy(req: TTSRequest):
     if not audio_b64 or not transcript:
         return JSONResponse(status_code=503, content={"detail": "TTS reference files unavailable"})
 
+    tts_server = get_settings().tts.base_url
     result = await synthesize(
         text=req.text,
         reference_text=transcript,
@@ -147,4 +148,5 @@ async def tts_proxy(req: TTSRequest):
     if not result:
         return JSONResponse(status_code=502, content={"detail": "TTS server returned no audio"})
 
+    result["tts_server"] = tts_server
     return result

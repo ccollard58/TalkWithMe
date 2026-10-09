@@ -1650,6 +1650,13 @@ html, body {
     line-height: 1;
 }
 
+.audio-source {
+    align-self: center;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+}
+
 .audio-play-btn:hover {
     background: var(--accent);
     color: #fff;

@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from app.models import ChatMessage
-from app.persistence import persist_message
+from app.persistence import persist_audio, persist_message
 
 
 def _add_exchange(room: str, user_text: str, reply_text: str):
@@ -73,6 +73,9 @@ class TestLoadRoom:
 
     def test_load_room_populates_session_and_returns_messages(self, client, persistence_root):
         self._seed_room("TNG", persistence_root)
+        persist_audio(
+            "TNG", "id-a1", "QUJD", "audio/wav", "http://tts.local:5500"
+        )
 
         resp = client.get("/api/session/load-room/TNG")
         assert resp.status_code == 200
@@ -80,6 +83,9 @@ class TestLoadRoom:
         assert body["room"] == "TNG"
         assert [m["sender"] for m in body["messages"]] == ["USER", "Alex"]
         assert [m["text"] for m in body["messages"]] == ["earlier question", "earlier answer"]
+        assert body["messages"][1]["audio_sources"] == {
+            "id-a1_0.wav": "http://tts.local:5500"
+        }
 
         # The in-memory session now carries the loaded history too.
         session_state = client.get("/api/session").json()

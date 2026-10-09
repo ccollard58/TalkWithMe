@@ -127,10 +127,14 @@ echo "Starting whisper-fastapi STT on $NODE_HOST:$STT_PORT (GPU $STT_GPU)"
 
 echo "Starting llama-server on $NODE_HOST:$LLM_PORT (GPUs $LLM_GPUS)"
 export CUDA_VISIBLE_DEVICES="$LLM_GPUS"
-exec "$LLAMA_BIN" \
+"$LLAMA_BIN" \
     -m "$MODEL_PATH" \
     --host 0.0.0.0 \
     --port "$LLM_PORT" \
     --cors-origins localhost \
     -ngl 999 \
     --tensor-split 1,1
+echo "llama-server exited (status $?). Job stays alive; restart it manually, or scancel $SLURM_JOB_ID to end the job."
+
+# Keep the job (and the TTS/STT servers) alive after llama-server exits or is killed.
+while true; do sleep 3600; done

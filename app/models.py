@@ -124,6 +124,10 @@ class PersistedMessage(BaseModel):
     sender: str
     text: str
     audio: List[str] = Field(default_factory=list)
+    audio_sources: Dict[str, str] = Field(
+        default_factory=dict,
+        description="TTS server URL keyed by generated audio filename",
+    )
 
 
 class PersistedHistoryResponse(BaseModel):
@@ -138,6 +142,10 @@ class AudioUploadRequest(BaseModel):
     message_id: str
     audio_base64: str
     mime_type: Optional[str] = None
+    tts_server: Optional[str] = Field(
+        default=None,
+        description="The TTS server URL that generated this audio, if applicable",
+    )
 
 
 class STTResponse(BaseModel):

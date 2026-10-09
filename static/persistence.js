@@ -60,8 +60,9 @@ async function getRoomMessageCount(roomName) {
  * @param {string} messageId - The UUID of the message this audio is for.
  * @param {string} audioBase64 - Base64-encoded audio data.
  * @param {string} [mimeType] - Optional MIME type of the audio.
+ * @param {string} [ttsServer] - Server URL that generated this audio.
  */
-async function uploadAudio(roomName, messageId, audioBase64, mimeType) {
+async function uploadAudio(roomName, messageId, audioBase64, mimeType, ttsServer) {
     try {
         const params = new URLSearchParams({ room: roomName });
         const resp = await fetch(`/api/persist/audio?${params}`, {
@@ -71,6 +72,7 @@ async function uploadAudio(roomName, messageId, audioBase64, mimeType) {
                 message_id: messageId,
                 audio_base64: audioBase64,
                 mime_type: mimeType || undefined,
+                tts_server: ttsServer || undefined,
             }),
         });
         if (!resp.ok) {
