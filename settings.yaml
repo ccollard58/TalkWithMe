@@ -10,10 +10,10 @@ tts:
   enabled: true
   base_url: http://localhost:8181
   timeout: 120.0
-  streaming: false
+  streaming: true
   parameters:
-    num_steps: 32
-    guidance_scale: 2
+    num_steps: 64
+    guidance_scale: 4
     denoise: true
   engine_profiles:
   - name: omnivoice
@@ -26,6 +26,10 @@ tts:
     base_url: http://localhost:8186
   - name: chatterbox
     base_url: http://localhost:8182
+  - name: index-tts
+    base_url: http://localhost:8187
+  - name: fasterQwen3
+    base_url: http://localhost:8187
 stt:
   enabled: true
   base_url: http://localhost:5000
